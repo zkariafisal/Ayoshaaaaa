@@ -1,0 +1,1378 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>بطاقات الحميمية الزوجية | Bedroom Intimacy Cards</title>
+  <meta name="description" content="تطبيق تفاعلي للأزواج لتعزيز الحميمية، كسر الروتين، واستكشاف أفكار وتحديات الفراش بأسلوب رومانسي وجريء." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d060f;
+      --card-bg: rgba(28, 12, 28, 0.7);
+      --card-border: rgba(244, 114, 182, 0.25);
+      --pink-main: #f43f5e;
+      --pink-glow: rgba(244, 63, 94, 0.35);
+      --purple-glow: rgba(168, 85, 247, 0.3);
+      --gold: #f59e0b;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #0d060f;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(136, 19, 55, 0.45) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(88, 28, 135, 0.45) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(30, 10, 30, 0.8) 0%, #0d060f 100%);
+      background-attachment: fixed;
+      color: #f3e8f0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 90px;
+    }
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+    ::-webkit-scrollbar-thumb { background: rgba(244, 114, 182, 0.3); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(244, 114, 182, 0.6); }
+
+    /* Glass Effect */
+    .glass {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    }
+    .glass-active {
+      background: linear-gradient(135deg, rgba(225, 29, 72, 0.3), rgba(168, 85, 247, 0.25));
+      border-color: rgba(244, 114, 182, 0.6);
+      box-shadow: 0 0 20px rgba(225, 29, 72, 0.35);
+    }
+
+    /* Card 3D Flip */
+    .card-scene {
+      perspective: 1000px;
+      min-height: 230px;
+    }
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 230px;
+      transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(0.34, 1.3, 0.64, 1);
+      cursor: pointer;
+    }
+    .card-inner.is-flipped {
+      transform: rotateY(180deg);
+    }
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+    }
+    .card-back {
+      transform: rotateY(180deg);
+      background: linear-gradient(145deg, #1f0b1c, #2b0e27);
+      border: 1px solid rgba(244, 114, 182, 0.45);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(225, 29, 72, 0.15);
+    }
+    .card-front {
+      background: linear-gradient(145deg, #160814, #220b20);
+      border: 1px solid rgba(244, 114, 182, 0.25);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .card-front:hover {
+      border-color: rgba(244, 114, 182, 0.6);
+      transform: translateY(-2px);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      letter-spacing: 0.2px;
+    }
+    .badge-deep {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(59, 130, 246, 0.3));
+      border: 1px solid rgba(6, 182, 212, 0.45);
+      color: #67e8f9;
+    }
+    .badge-romantic {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.25), rgba(236, 72, 153, 0.3));
+      border: 1px solid rgba(244, 63, 94, 0.45);
+      color: #fda4af;
+    }
+    .badge-challenge {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(234, 88, 12, 0.3));
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      color: #fcd34d;
+    }
+
+    /* Privacy Blur */
+    .privacy-blurred {
+      filter: blur(7px);
+      transition: filter 0.3s ease;
+    }
+    .privacy-blurred:hover, .privacy-blurred:active {
+      filter: blur(0px);
+    }
+
+    /* Toast Notification */
+    #toastContainer {
+      position: fixed;
+      bottom: 84px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100000;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .toast-msg {
+      background: rgba(24, 9, 23, 0.95);
+      border: 1px solid rgba(244, 114, 182, 0.5);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 15px rgba(225, 29, 72, 0.35);
+      animation: toastIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(16px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* 3D Dice styling */
+    .die-cube {
+      width: 82px;
+      height: 82px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #2a0f25, #1a0817);
+      border: 2px solid rgba(244, 114, 182, 0.4);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.6), inset 0 2px 8px rgba(255,255,255,0.1), 0 0 15px rgba(225, 29, 72, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      text-align: center;
+      transition: all 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    .die-cube.rolling {
+      animation: diceShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+    @keyframes diceShake {
+      0% { transform: rotate(0deg) scale(1); }
+      20% { transform: rotate(-18deg) scale(1.1); }
+      40% { transform: rotate(18deg) scale(0.95); }
+      60% { transform: rotate(-12deg) scale(1.05); }
+      80% { transform: rotate(10deg) scale(0.98); }
+      100% { transform: rotate(0deg) scale(1); }
+    }
+
+    /* Wheel styling */
+    #wheelCanvas {
+      filter: drop-shadow(0 10px 25px rgba(0,0,0,0.6)) drop-shadow(0 0 20px rgba(244, 63, 94, 0.3));
+    }
+    .wheel-pointer {
+      width: 0; 
+      height: 0; 
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-top: 28px solid #f43f5e;
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
+    }
+
+    /* Buttons */
+    .btn-action {
+      background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid rgba(244, 114, 182, 0.25);
+      color: #f3e8f0;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-action:hover, .btn-action:active {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.3), rgba(168, 85, 247, 0.25));
+      border-color: rgba(244, 114, 182, 0.6);
+      transform: translateY(-1px);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 16px rgba(225, 29, 72, 0.4);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #f43f5e, #e11d48);
+      box-shadow: 0 6px 22px rgba(225, 29, 72, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top App Bar -->
+  <header style="position: sticky; top: 0; z-index: 50; background: rgba(13, 6, 15, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(244, 114, 182, 0.2); padding: 10px 16px;">
+    <div style="max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+      
+      <!-- Brand & Turn -->
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, #e11d48, #9333ea); display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 10px rgba(225, 29, 72, 0.4);">
+          💋
+        </div>
+        <div>
+          <h1 style="font-size: 1.05rem; font-weight: 900; background: linear-gradient(135deg, #fff, #fda4af); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; line-height: 1.2;">
+            بطاقات الحميمية الزوجية
+          </h1>
+          <div style="font-size: 0.72rem; color: #f472b6; display: flex; align-items: center; gap: 6px;">
+            <span id="turnLabel">الدور الآن: الزوج 👨</span>
+            <button onclick="toggleTurn()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 6px; padding: 1px 6px; font-size: 0.68rem; cursor: pointer;">تبديل</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <button onclick="exitCardsApp()" class="btn-action btn-primary" title="الرجوع إلى الألعاب الرئيسية" style="padding: 7px 12px; font-weight: bold;">
+          ✕ رجوع
+        </button>
+        <!-- Privacy Blur Button -->
+        <button id="privacyBtn" onclick="togglePrivacy()" class="btn-action" title="وضع الخصوصية: إخفاء/إظهار النصوص" style="padding: 7px 10px;">
+          <span id="privacyIcon">🙈</span>
+          <span style="font-size: 0.75rem;">الخصوصية</span>
+        </button>
+        <!-- Sound Toggle -->
+        <button id="soundBtn" onclick="toggleSound()" class="btn-action" title="كتم / تشغيل الصوت" style="padding: 7px 10px;">
+          <span id="soundIcon">🔊</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main style="max-width: 1100px; margin: 0 auto; padding: 16px 12px;">
+
+    <!-- TAB 1: CARDS -->
+    <section id="tabCards" style="display: block;">
+      
+      <!-- Sub-Filters & Toolbar -->
+      <div class="glass" style="border-radius: 18px; padding: 12px 14px; margin-bottom: 18px;">
+        
+        <!-- Category Filters -->
+        <div style="display: flex; align-items: center; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 10px;">
+          <button class="filter-cat-btn btn-action glass-active" data-cat="all" onclick="setCategoryFilter('all')">الكل (<span id="countAll">0</span>)</button>
+          <button class="filter-cat-btn btn-action" data-cat="deep" onclick="setCategoryFilter('deep')">حميمية عميقة وجريئة 🔥</button>
+          <button class="filter-cat-btn btn-action" data-cat="romantic" onclick="setCategoryFilter('romantic')">رومانسية وعاطفة 💖</button>
+          <button class="filter-cat-btn btn-action" data-cat="challenge" onclick="setCategoryFilter('challenge')">تحديات الفراش ⚡</button>
+        </div>
+
+        <!-- Target Filter & Action Buttons -->
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;">
+          <!-- Target selector -->
+          <div style="display: flex; align-items: center; gap: 4px; overflow-x: auto;">
+            <button class="filter-target-btn btn-action glass-active" data-target="all" onclick="setTargetFilter('all')">الجميع</button>
+            <button class="filter-target-btn btn-action" data-target="زوج" onclick="setTargetFilter('زوج')">للزوج فقط 👨</button>
+            <button class="filter-target-btn btn-action" data-target="زوجة" onclick="setTargetFilter('زوجة')">للزوجة فقط 👩</button>
+            <button class="filter-target-btn btn-action" data-target="كلاهما" onclick="setTargetFilter('كلاهما')">للطرفين 💑</button>
+          </div>
+
+          <!-- Quick Deck Actions -->
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <button onclick="drawRandomCard()" class="btn-action btn-primary">🎲 سحب عشوائي</button>
+            <button onclick="shuffleCards()" class="btn-action">🔀 خلط</button>
+            <button id="favsToggleBtn" onclick="toggleFavoritesOnly()" class="btn-action">⭐ المفضلة (<span id="favsCount">0</span>)</button>
+            <button onclick="openCustomCardModal()" class="btn-action" style="background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.4); color: #6ee7b7;">➕ إضافة خاصة</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Cards Grid -->
+      <div id="cardsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+        <!-- Injected dynamically -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="cardsEmptyState" style="display: none; text-align: center; padding: 60px 20px;" class="glass">
+        <div style="font-size: 40px; margin-bottom: 12px;">🎴</div>
+        <h3 style="color: #fda4af; margin-bottom: 6px;">لا توجد بطاقات مطابقة لهذا التصنيف!</h3>
+        <p style="font-size: 0.85rem; color: #a8a29e;">جرّب اختيار تصنيف آخر أو إضافة بطاقة خاصة بكما.</p>
+      </div>
+
+    </section>
+
+    <!-- TAB 2: GUIDE (20 IDEAS) -->
+    <section id="tabGuide" style="display: none;">
+      <div class="glass" style="border-radius: 18px; padding: 14px; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+          <div>
+            <h2 style="font-size: 1.15rem; font-weight: 800; color: #fff; margin: 0 0 4px;">📖 الدليل التطبيقي للفراش (20 فكرة مبتكرة)</h2>
+            <p style="font-size: 0.8rem; color: #fda4af; margin: 0;">أفكار مدروسة نفسياً وحسياً لكسر الروتين وتحويل الفراش إلى مغامرة رومانسية عميقة.</p>
+          </div>
+          <!-- Search in guide -->
+          <input type="text" id="guideSearchInput" placeholder="🔍 بحث في الأفكار..." oninput="renderGuide()" 
+            style="background: rgba(0,0,0,0.3); border: 1px solid rgba(244, 114, 182, 0.3); color: #fff; padding: 8px 14px; border-radius: 12px; font-size: 0.82rem; outline: none; width: 220px;">
+        </div>
+
+        <!-- Category filter for guide -->
+        <div style="display: flex; gap: 6px; overflow-x: auto;">
+          <button class="guide-cat-btn btn-action glass-active" data-cat="all" onclick="setGuideCategory('all')">الكل (20)</button>
+          <button class="guide-cat-btn btn-action" data-cat="romantic" onclick="setGuideCategory('romantic')">رومانسية وعاطفة</button>
+          <button class="guide-cat-btn btn-action" data-cat="deep" onclick="setGuideCategory('deep')">حميمية عميقة وجريئة</button>
+          <button class="guide-cat-btn btn-action" data-cat="challenge" onclick="setGuideCategory('challenge')">تحديات الفراش</button>
+        </div>
+      </div>
+
+      <!-- Guide Items List -->
+      <div id="guideList" style="display: flex; flex-direction: column; gap: 14px;">
+        <!-- Injected dynamically -->
+      </div>
+    </section>
+
+    <!-- TAB 3: WHEEL OF FORTUNE -->
+    <section id="tabWheel" style="display: none;">
+      <div class="glass" style="border-radius: 24px; padding: 24px 16px; max-width: 500px; margin: 0 auto; text-align: center;">
+        
+        <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.4); padding: 4px 12px; border-radius: 9999px; font-size: 0.8rem; font-weight: 700; color: #fda4af; margin-bottom: 12px;">
+          🎡 عجلة الحظ للزوجين
+        </div>
+        <h2 style="font-size: 1.35rem; font-weight: 900; color: #fff; margin-bottom: 6px;">من يبدأ التحدي الليلة؟</h2>
+        <p style="font-size: 0.82rem; color: #a8a29e; margin-bottom: 20px;">دوّر العجلة لتقرير من عليه تنفيذ الأمر الحميمي التالي أو تحديد طبيعة التحدي!</p>
+
+        <!-- Wheel Canvas Container -->
+        <div style="position: relative; width: 300px; height: 300px; margin: 0 auto 24px;">
+          <div class="wheel-pointer"></div>
+          <canvas id="wheelCanvas" width="300" height="300" style="border-radius: 50%;"></canvas>
+        </div>
+
+        <button id="spinBtn" onclick="spinWheel()" class="btn-action btn-primary" style="padding: 12px 36px; font-size: 1.1rem; border-radius: 16px; margin-bottom: 16px;">
+          🎯 تدوير العجلة الآن
+        </button>
+
+        <!-- Result Box -->
+        <div id="wheelResultBox" style="display: none; background: linear-gradient(135deg, rgba(225,29,72,0.25), rgba(147,51,234,0.25)); border: 1px solid rgba(244, 114, 182, 0.5); border-radius: 16px; padding: 14px; margin-top: 10px;">
+          <div style="font-size: 0.75rem; color: #fda4af; font-weight: 700; margin-bottom: 4px;">🎉 النتيجة النهائية:</div>
+          <div id="wheelResultText" style="font-size: 1.25rem; font-weight: 900; color: #fff; margin-bottom: 10px;">-</div>
+          <button onclick="switchTab('cards'); drawRandomCard();" class="btn-action btn-primary" style="font-size: 0.85rem;">
+            🎴 سحب بطاقة لهذا الفائز
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 4: ROMANTIC DICE -->
+    <section id="tabDice" style="display: none;">
+      <div class="glass" style="border-radius: 24px; padding: 24px 16px; max-width: 580px; margin: 0 auto; text-align: center;">
+        
+        <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.4); padding: 4px 12px; border-radius: 9999px; font-size: 0.8rem; font-weight: 700; color: #fcd34d; margin-bottom: 12px;">
+          🎲 نرد الرومانسية المطور
+        </div>
+        <h2 style="font-size: 1.35rem; font-weight: 900; color: #fff; margin-bottom: 6px;">توليد أوامر الفراش العشوائية</h2>
+        <p style="font-size: 0.82rem; color: #a8a29e; margin-bottom: 24px;">3 أحجار نرد تفاعلية تحدد (طريقة المداعبة + المنطقة الحساسة + المدة الزمنية)!</p>
+
+        <!-- 3 Dice Display -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px;">
+          
+          <!-- Die 1: Action -->
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #fda4af;">1. المداعبة</div>
+            <div id="die1" class="die-cube">
+              <div style="font-size: 24px; margin-bottom: 2px;">💋</div>
+              <div id="die1Text" style="font-size: 0.72rem; font-weight: 800; color: #fff; line-height: 1.2;">تقبيل ومص عميق</div>
+            </div>
+          </div>
+
+          <!-- Die 2: Zone -->
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #a78bfa;">2. المنطقة</div>
+            <div id="die2" class="die-cube" style="border-color: rgba(168, 85, 247, 0.4); box-shadow: 0 12px 28px rgba(0,0,0,0.6), 0 0 15px rgba(168, 85, 247, 0.2);">
+              <div style="font-size: 24px; margin-bottom: 2px;">✨</div>
+              <div id="die2Text" style="font-size: 0.72rem; font-weight: 800; color: #fff; line-height: 1.2;">الرقبة وشحمة الأذن</div>
+            </div>
+          </div>
+
+          <!-- Die 3: Duration -->
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #fcd34d;">3. المدة</div>
+            <div id="die3" class="die-cube" style="border-color: rgba(245, 158, 11, 0.4); box-shadow: 0 12px 28px rgba(0,0,0,0.6), 0 0 15px rgba(245, 158, 11, 0.2);">
+              <div style="font-size: 24px; margin-bottom: 2px;">⏳</div>
+              <div id="die3Text" style="font-size: 0.72rem; font-weight: 800; color: #fff; line-height: 1.2;">دقيقة دون توقف</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Roll Button -->
+        <button id="rollDiceBtn" onclick="rollDice()" class="btn-action btn-primary" style="padding: 12px 36px; font-size: 1.1rem; border-radius: 16px; margin-bottom: 20px;">
+          🎲 دحرجة النرد الآن!
+        </button>
+
+        <!-- Combined Generated Command -->
+        <div id="diceCommandBox" style="background: linear-gradient(135deg, rgba(225,29,72,0.2), rgba(147,51,234,0.25)); border: 1px solid rgba(244, 114, 182, 0.4); border-radius: 18px; padding: 18px; text-align: center;">
+          <div style="font-size: 0.75rem; color: #fda4af; font-weight: 700; margin-bottom: 6px;">الأمر المشترك الناتج عن النرد:</div>
+          <p id="diceCommandText" style="font-size: 1.1rem; font-weight: 800; color: #fff; line-height: 1.5; margin: 0 0 14px;">
+            "تقبيل ومص عميق على الرقبة وشحمة الأذن لمدة دقيقة دون توقف"
+          </p>
+          <div style="display: flex; justify-content: center; gap: 8px;">
+            <button onclick="copyCurrentDiceCommand()" class="btn-action">📋 نسخ الأمر</button>
+            <button onclick="showToast('🔥 تم اعتماد أمر النرد! بالتوفيق لكما 💖')" class="btn-action btn-primary">تنفيذ التحدي 🔥</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Floating Navigation Bar -->
+  <nav style="position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); z-index: 1000; background: rgba(22, 9, 24, 0.88); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(244, 114, 182, 0.35); border-radius: 9999px; padding: 6px 12px; display: flex; align-items: center; gap: 6px; box-shadow: 0 10px 35px rgba(0,0,0,0.6), 0 0 20px rgba(225, 29, 72, 0.25);">
+    <button class="nav-tab-btn btn-action glass-active" data-tab="cards" onclick="switchTab('cards')" style="border-radius: 9999px; padding: 6px 14px;">
+      <span>🎴</span>
+      <span style="font-size: 0.8rem;">البطاقات</span>
+    </button>
+    <button class="nav-tab-btn btn-action" data-tab="guide" onclick="switchTab('guide')" style="border-radius: 9999px; padding: 6px 14px;">
+      <span>💡</span>
+      <span style="font-size: 0.8rem;">الـ 20 فكرة</span>
+    </button>
+    <button class="nav-tab-btn btn-action" data-tab="wheel" onclick="switchTab('wheel')" style="border-radius: 9999px; padding: 6px 14px;">
+      <span>🎡</span>
+      <span style="font-size: 0.8rem;">العجلة</span>
+    </button>
+    <button class="nav-tab-btn btn-action" data-tab="dice" onclick="switchTab('dice')" style="border-radius: 9999px; padding: 6px 14px;">
+      <span>🎲</span>
+      <span style="font-size: 0.8rem;">النرد</span>
+    </button>
+  </nav>
+
+  <!-- MODAL: ZOOM CARD VIEW -->
+  <div id="zoomModal" style="display: none; position: fixed; inset: 0; z-index: 99999; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); align-items: center; justify-content: center; padding: 16px;">
+    <div style="background: linear-gradient(145deg, #220b20, #160815); border: 1px solid rgba(244, 114, 182, 0.5); border-radius: 28px; width: 100%; max-width: 500px; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 30px rgba(225, 29, 72, 0.35); position: relative; text-align: center;">
+      
+      <!-- Close button -->
+      <button onclick="closeZoomModal()" style="position: absolute; top: 14px; left: 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 32px; height: 32px; border-radius: 50%; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+        ✕
+      </button>
+
+      <!-- Badge row -->
+      <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 16px;">
+        <span id="zoomCategoryBadge" class="badge badge-deep">حميمية عميقة</span>
+        <span id="zoomTargetBadge" class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">الموجه: كلاهما</span>
+      </div>
+
+      <!-- Command text in quote card -->
+      <div style="background: linear-gradient(135deg, rgba(225,29,72,0.18), rgba(147,51,234,0.18)); border: 1px solid rgba(244, 114, 182, 0.3); border-radius: 20px; padding: 22px 18px; margin-bottom: 22px;">
+        <p id="zoomCardText" style="font-size: 1.25rem; font-weight: 800; color: #fff; line-height: 1.6; margin: 0;">
+          -
+        </p>
+      </div>
+
+      <!-- Action buttons -->
+      <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
+        <button id="zoomCopyBtn" onclick="copyZoomText()" class="btn-action">
+          📋 نسخ الأمر
+        </button>
+        <button id="zoomFavBtn" onclick="toggleZoomFav()" class="btn-action">
+          ⭐ في المفضلة
+        </button>
+        <button onclick="completeZoomCard()" class="btn-action btn-primary">
+          تم التنفيذ بنجاح 🔥
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL: CUSTOM CARD MODAL -->
+  <div id="customCardModal" style="display: none; position: fixed; inset: 0; z-index: 99999; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); align-items: center; justify-content: center; padding: 16px;">
+    <div style="background: linear-gradient(145deg, #220b20, #160815); border: 1px solid rgba(244, 114, 182, 0.4); border-radius: 26px; width: 100%; max-width: 480px; padding: 22px; box-shadow: 0 20px 60px rgba(0,0,0,0.7); position: relative;">
+      
+      <button onclick="closeCustomCardModal()" style="position: absolute; top: 14px; left: 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 32px; height: 32px; border-radius: 50%; font-size: 1rem; cursor: pointer;">
+        ✕
+      </button>
+
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: #fff; margin: 0 0 14px; text-align: center;">
+        ➕ إضافة بطاقة خاصة بكما
+      </h3>
+
+      <div style="margin-bottom: 12px;">
+        <label style="display: block; font-size: 0.8rem; color: #fda4af; font-weight: 700; margin-bottom: 6px;">
+          نص الأمر الحميمي أو السؤال الخاص:
+        </label>
+        <textarea id="customCardInput" rows="3" placeholder="اكتب الأمر أو التحدي الحميمي هنا..." 
+          style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(244, 114, 182, 0.35); border-radius: 14px; color: #fff; padding: 10px 12px; font-size: 0.9rem; font-family: inherit; outline: none; resize: none;"></textarea>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px;">
+        <div>
+          <label style="display: block; font-size: 0.78rem; color: #fda4af; font-weight: 700; margin-bottom: 6px;">التصنيف:</label>
+          <select id="customCardCat" style="width: 100%; background: #1f0b1e; border: 1px solid rgba(244, 114, 182, 0.35); border-radius: 10px; color: #fff; padding: 8px; font-size: 0.82rem; outline: none;">
+            <option value="deep">حميمية عميقة وجريئة</option>
+            <option value="romantic">رومانسية وعاطفة</option>
+            <option value="challenge">تحديات الفراش</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.78rem; color: #fda4af; font-weight: 700; margin-bottom: 6px;">موجه إلى:</label>
+          <select id="customCardTarget" style="width: 100%; background: #1f0b1e; border: 1px solid rgba(244, 114, 182, 0.35); border-radius: 10px; color: #fff; padding: 8px; font-size: 0.82rem; outline: none;">
+            <option value="كلاهما">للطرفين معاً</option>
+            <option value="زوج">للزوج فقط 👨</option>
+            <option value="زوجة">للزوجة فقط 👩</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button onclick="closeCustomCardModal()" class="btn-action">إلغاء</button>
+        <button onclick="saveCustomCard()" class="btn-action btn-primary">حفظ البطاقة 💖</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer"></div>
+
+  <!-- MAIN JAVASCRIPT APPLICATION -->
+  <script>
+    // Audio Synthesis System (No external audio files needed)
+    const AudioSystem = {
+      ctx: null,
+      enabled: true,
+      init() {
+        if (!this.ctx && (window.AudioContext || window.webkitAudioContext)) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume().catch(() => {});
+        }
+      },
+      playFlip() {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.15);
+          gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.25);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.25);
+        } catch(e) {}
+      },
+      playTick() {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(400, this.ctx.currentTime);
+          gain.gain.setValueAtTime(0.05, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.04);
+        } catch(e) {}
+      },
+      playFanfare() {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          [440, 554.37, 659.25, 880].forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            const startTime = this.ctx.currentTime + (idx * 0.1);
+            osc.frequency.setValueAtTime(freq, startTime);
+            gain.gain.setValueAtTime(0.06, startTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.35);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(startTime);
+            osc.stop(startTime + 0.35);
+          });
+        } catch(e) {}
+      },
+      playDiceRoll() {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          for (let i = 0; i < 5; i++) {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'square';
+            const t = this.ctx.currentTime + (i * 0.08);
+            osc.frequency.setValueAtTime(200 + Math.random() * 250, t);
+            gain.gain.setValueAtTime(0.04, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(t);
+            osc.stop(t + 0.06);
+          }
+        } catch(e) {}
+      }
+    };
+
+    // Data Store
+    const RAW_GUIDE_IDEAS = [{"id": 1, "title": "1. طقس تحريم الإيلاج المؤقت (Sensory Mapping)", "tagline": "إشعال نار الترقب عبر إيقاف الدخول السريع وتأجيج الحواس السطحية", "category": "deep", "directCommand": "استلقِ أمامي بدون ملابس؛ ممنوع الإيلاج لمدة 20 دقيقة كاملة، سنكتشف فقط باللمس والأنفاس كل سنتيمتر من الجسد حتى نصل لدرجة التوسل.", "psychologicalImpact": "يكسر التوتر المرتبط بالأداء، ويحول تركيز الزوجين من النتيجة النهائية (الذروة السريعة) إلى رحلة الإحساس البطيء، مما يرفع إفراز هرمون الدوبامين والترقب الحميمي إلى أعلى مستوياته.", "steps": ["إطفاء الأضواء القوية والاكتفاء بشموع خافتة أو إضاءة ليد حمراء دافئة.", "استلقاء أحد الشريكين مستسلماً ومغمض العينين بينما يمرر الآخر أطراف أصابعه وشفتيه على الرقبة، الصدر، الفخذين، وأسفل البطن.", "الاقتراب من المناطق الحساسة دون لمسها مباشرة، مما يبني رغبة متوهجة.", "تبادل الأدوار بعد 10 دقائق بنفس القواعد الصارمة."], "tipsForCouples": "اجعلوا التنفس مسموعاً؛ الهمس بكلمات الاشتياق أثناء المنع يجعل اللحظة التي يُسمح فيها بالإيلاج انفجارية الإحساس."}, {"id": 2, "title": "2. لعبة تعصيب العينين ومسرح الحواس (Blindfolded Senses)", "tagline": "حجب حاسة البصر ليشتعل اللمس والسمع والتذوق عشرات المرات", "category": "challenge", "directCommand": "اربط عيني بوشاح حريري ناعم، لا أرى شيئاً، واستخدم يديك ولسانك ومفاجآتك الجسدية كيفما تشاء دون سابق إنذار.", "psychologicalImpact": "فقدان البصر المؤقت يزيل خجل المظهر ويمنح شعوراً عميقاً بالاستسلام والثقة للطرف الآخر، مع مضاعفة حساسية النهايات العصبية للجلد.", "steps": ["استخدام وشاح ناعم أو رباط مريح لحجب الرؤية تماماً.", "تمرير عناصر متباينة: لمسة ريشة ناعمة، قبله دافئة، ثم نفخة هواء حار، ثم لعقة رطبة وبطيئة.", "ترك الطرف المعصوب يخمن مكان اللمسة التالية أو يستجديها بصوته.", "التحرك بحرية واستكشاف زوايا جسد لم تكن تحظى بالتركيز المعتاد."], "tipsForCouples": "حافظ على عنصر المفاجأة؛ الصمت أحياناً قبل لمسة مفاجئة للشفاه أو الرقبة يرفع دقات القلب بشدة."}, {"id": 3, "title": "3. التنفس التانتري والمحاذاة القلبية (Eye & Breath Sync)", "tagline": "دمج الروحين في فراش واحد قبل أن تتلامس الأعضاء", "category": "romantic", "directCommand": "اجلس مقابلي ركبة إلى ركبة، ضع يدك على قلبي ويدي على قلبك، ننظر لعيون بعضنا ونتنفس بنفس الشهيق والزفير لدقيقتين كاملتين دون كلام.", "psychologicalImpact": "يزيل فوضى اليوم والضغوطات العقلية، ويفعل الجهاز العصبي الباراسمبثاوي (المسؤول عن الرخاء والاستثارة الحميمية)، ويطلق هرمون الأوكسيتوسين (هرمون التعلق والحب).", "steps": ["الجلوس متربعين أو على الركبتين بحيث يلامس الصدر الصدر أو بمسافة سنتيمترات قليلة.", "وضع الكف الأيمن لكل طرف على قلب الآخر، والكف الأيسر فوق كف الشريك.", "التحديق المباشر في العينين والتنفس بإيقاع واحد بطيء وعميق.", "عندما تشعران بالموجة الدافئة، الانتقال إلى قبلة عميقة وبطيئة جداً."], "tipsForCouples": "لا تخافوا من الضحك أو البكاء أو القشعريرة؛ هذا التمرين يفتح بوابات الألفة الوجدانية الصادقة."}, {"id": 4, "title": "4. تباين الثلج واللهب (Thermal Sensory Contrast)", "tagline": "صدمة اللذة بين برودة الثلج القارصة ودفء الفم واللسان", "category": "fun", "directCommand": "ضع قطعة ثلج في فمك أو مررها على حلمتي ورقبتي وبطني، ثم الحَق أثرها فوراً بلسانك الدافئ وأنفاسك الحارة.", "psychologicalImpact": "التناقض المفاجئ في درجات الحرارة يرسل إشارات كهربائية قوية عبر الأعصاب إلى المخ، مما يضاعف تدفق الدم في الأعضاء التناسلية ويخلق رعشات جسدية لذيذة.", "steps": ["تجهيز وعاء صغير فيه مكعبات ثلج وزيت دافئ بالقرب من السرير.", "تمرير مكعب الثلج على طول العمود الفقري أو حول الحلمتين ومنطقة العانة.", "النزول بالفم مباشرة وامتصاص نقطة الذوبان بدفء ورطوبة اللسان.", "عكس العملية باستخدام قطرة زيت تدليك دافئة تليها برودة نفخات الهواء."], "tipsForCouples": "تجنب وضع الثلج المباشر الثابت لفترة طويلة على الأنسجة الرقيقة؛ الحركة المستمرة السريعة هي السر."}, {"id": 5, "title": "5. بروتوكول الكلام الجريء المباشر (Sensual Dirty Talk)", "tagline": "كسر جدار الصمت وتحويل السمع إلى محرك إثارة أسطوري", "category": "deep", "directCommand": "لا تمارس الجنس معي بصمت الليلة؛ اهمس في أذني بما تشعر به أعضاؤك الآن، وسمّ كل جزء باسمه الحقيقي المثير، وأخبرني كم أنا مرغوب.", "psychologicalImpact": "الكلام الجريء والمسموع يفك قيود الخجل المجتمعي، ويؤكد للطرف الآخر أنه مثير ومرغوب بجنون في هذه اللحظة، مما يعزز الثقة الجنسية.", "steps": ["البدء بالمدح الجسدي المباشر: 'جسدك يشعلني الليلة، هذا المنظر يجعلني أفقد عقلي'.", "التعبير عن الأحاسيس الحسية بصوت خفيض: 'دفء مكانك يذيبني، حركتك هذه تجعلني أطير'.", "إعطاء وتلقي الأوامر المحببة: 'امسكني بقوة أكبر'، 'انظر في عيني وأنت في داخلي'.", "إطلاق الآهات الحرة دون كتمان أو خجل."], "tipsForCouples": "اتفقوا على الكلمات التي تلهب رغبتكما؛ الصوت الهامس القريب من الأذن يحفز النهايات العصبية للرقبة مباشرة."}, {"id": 6, "title": "6. مساج الشموع الذائبة والزيوت الساخنة (Hot Oil Ritual)", "tagline": "إذابة الإجهاد اليومي وتحويل الجسد إلى قماشة للمتعة", "category": "romantic", "directCommand": "استلقِ على بطنك، سأسكب زيت المساج الدافئ على ظهرك وأردافك وفخذيك، وأدلكك بيدي وجسدي بالكامل حتى تستسلم تماماً.", "psychologicalImpact": "ينقل الجسم من حالة التوتر العضلي والانشغال الذهني إلى حالة استرخاء عميقة واستقبال حسّي عالٍ، حيث يصبح كل ملمس تالياً أكثر متعة بأضعاف.", "steps": ["استخدام شمعة تدليك مخصصة للجسم أو تسخين زيت لوز/جوجوبا لدرجة حرارة مريحة.", "البدء من الرقبة والكتفين بحركات دائرية بطيئة ونزولاً على امتداد العمود الفقري.", "استخدام راحة اليد والساعدين للمساج الكامل، ثم الانتقال لتدليك الأرداف وما بين الفخذين بحميمية.", "تلمس الجسد بالجسد مع وجود الزيت مما يخلق انزلاقاً فائق النعومة والحرارة."], "tipsForCouples": "ضعوا منشفة ناعمة تحت الجسد وتأكدوا من دفء حرارة الغرفة قبل البدء."}, {"id": 7, "title": "7. هندسة الزوايا والوسائد الحميمية (Angles of Ecstasy)", "tagline": "تغيير ميكانيكا الفراش للوصول لنقاط إثارة غائرة وجديدة", "category": "deep", "directCommand": "ضع وسادتين تحت أسفل حوضي وارفع قدميّ على كتفيك، لنخوض تجربة إيلاج بزاوية عميقة جداً لم نجربها من قبل.", "psychologicalImpact": "يكسر رتابة الأوضاع التقليدية ويشبع فضول الاستكشاف الجسدي، مما يساعد على ملامسة منطقة G-Spot أو عنق الرحم وتوفير احتكاك مكثف غير معتاد.", "steps": ["رفع حوض الزوجة بواسطة وسادة متينة لدعم أسفل الظهر وإمالة الحوض للأعلى.", "تجربة الإدخال ببطء شديد لاستكشاف النقطة التي تحدث فيها اللذة الأكبر.", "تغيير وضع الأرجل: ضم الفخذين معاً لتضييق الممر وزيادة الاحتكاك، أو فردهما على الكتفين لعمق أقصى.", "مزامنة اللمس اليدوي للبظر أو الخصيتين أثناء هذا الوضع."], "tipsForCouples": "التواصل مهم جداً في هذا الوضع؛ اسأل شريكتك: 'هل هذا العمق مريح وممتع لكِ؟' وكيّف الحركة وفقاً لجوابها."}, {"id": 8, "title": "8. فن حبس النشوة وتأخير الذروة (Sensual Edging)", "tagline": "مضاعفة قوة النشوة مرات عديدة عبر الاقتراب والتراجع المتعمد", "category": "challenge", "directCommand": "سأوصلك إلى حافة القذف أو النشوة حتى تبدأ بالارتعاش، ثم سأتوقف فجأة وأهدئك... سنكرر هذا 3 مرات قبل أن أسمح لك بالانفجار.", "psychologicalImpact": "تدريب على التحكم وضبط الرغبة، يولد شحنة عاطفية وجسدية هائلة تؤدي عند الإفراج عنها أخيراً إلى هزة جماع لا تُنسى في قوتها ومدتها.", "steps": ["مداعبة الشريك باليد، الفم، أو الإيلاج حتى يصل إلى درجة 8 من 10 في مقياس الذروة.", "التوقف الفوري عن الحركة والضغط الخفيف على قاعدة العضو أو تهدئة وتيرة لمس البظر.", "الانتظار لمدة 30 إلى 60 ثانية مع قبلات هادئة على الرقبة حتى تهدأ الموجة قليلاً.", "إعادة المداعبة مرة ثانية وثالثة، ثم إعطاء الإذن بالوصول الكامل دون قيود."], "tipsForCouples": "هذه التقنية ممتازة أيضاً لعلاج القذف السريع لدى الرجال وتوسيع نطاق النشوات المتعددة لدى النساء."}, {"id": 9, "title": "9. سيناريو المرآة والحضور البصري (The Mirror Protocol)", "tagline": "رؤية تعابير الشغف والجسدين وهما يلتحمان عيناً لعين في المرآة", "category": "deep", "directCommand": "قفي أمامي أمام المرآة الكبيرة؛ لا تنظري إلى الأسفل، انظري لعينيك ولجسدينا في المرآة وأنا أدخل فيكِ وأداعبكِ من الخلف.", "psychologicalImpact": "التغلب على الحياء واكتشاف جمال الجسد من زاوية خارجية، مع رؤية نشوة الشريك في عينيه، مما يشكل محفزاً بصرياً فائق الإثارة للطرفين.", "steps": ["الوقوف أو الركوع أمام مرآة خزانة أو مرآة حائط بإضاءة جيدة ولكن ناعمة.", "البدء بملامسة الخصر والأرداف والثديين مع التحديق المشترك في انعكاس الصورة.", "الإيلاج من الخلف (Doggy Style أو Standing) مع تثبيت النظرات على تعابير الوجه في المرآة.", "مداعبة البظر باليد أثناء مشاهدة حركة اليد وتجاوب الجسد معها في المرآة."], "tipsForCouples": "المشهد المرئي يعزز فكرة: 'نحن نصنع هذه المتعة معاً الآن بكل فخر ورغبة'."}, {"id": 10, "title": "10. تقبيل الخارطة الجسدية الكاملة (Head-to-Toe Kissing)", "tagline": "قبلات متصلة كخيط حرير لا ينقطع من أصابع القدم للشفاه", "category": "romantic", "directCommand": "استلقِ مسترخياً تماماً؛ سأرسم شفتي على جسدك في مسار متواصل يبدأ من باطن قدميك حتى جبينك، دون أن تفارق شفتاي بشرتك لحظة واحدة.", "psychologicalImpact": "يمنح الطرف المتلقي شعوراً نادراً بالتقديس والاهتمام بكل جزء في جسده، ويشعر بالاطمئنان والأنوثة أو الفحولة الكاملة.", "steps": ["البدء من أصابع القدمين وباطن القدم، صعوداً بلطف عبر بطة الساق والركبة.", "التركيز على الفخذين الداخليين برفق شديد وبطء متعمد.", "الصعود إلى أسفل البطن، السرة، القفص الصدري، ثم الصدر والحلمتين.", "المرور بالرقبة وزوايا الفك وصولاً إلى الشفتين في قبلة عميقة طويلة."], "tipsForCouples": "نوّع بين القبلات الرطبة، القبلات الخفيفة مثل الفراشة، والأنفاس الدافئة التي تسبق الشفاه."}, {"id": 11, "title": "11. تبادل أدوار السيطرة والاستسلام (Power Dynamic Play)", "tagline": "يوم تكون فيه آمراً مطاعاً، ويوم تستسلم فيه كلياً بين يدي شريكك", "category": "challenge", "directCommand": "الليلة لك كامل السيطرة؛ أنا طوع أمرك، تطلب ما تشتهي وأنا أنفذ، وسنتفق على كلمة سرية لو أردنا التوقف.", "psychologicalImpact": "يمنح متنفساً من مسؤوليات الحياة الواقعية؛ فالشخص الذي يدير كل شيء في عمله يستمتع جداً بالاستسلام التام في الفراش، والعكس صحيح.", "steps": ["الاتفاق المسبق على الحدود المريحة وكلمة سرية واضحة (Safe Word).", "يقوم الطرف المسيطر بإعطاء الأوامر بحزم وهدوء (مثل: 'اركع أمامي'، 'انظر في عيني'، 'لا تتحرك حتى آمرك').", "يقوم الطرف المستسلم بالطاعة والتجاوب الحسي دون تردد.", "يمكن استخدام ربط لطيف للأيدي بواسطة وشاح ناعم لتعزيز الشعور بالاستسلام."], "tipsForCouples": "العنصر الأهم بعد انتهاء هذا التمرين هو الاحتضان الدافئ والتأكيد على الحب والأمان بين الزوجين."}, {"id": 12, "title": "12. الحمام المائي الساخن والتدليك الرغوي (Hydro-Passion)", "tagline": "حميمية دافئة تجمع بين انسياب المياه ورائحة الصابون المعطر", "category": "fun", "directCommand": "تعال معي تحت الدش الساخن أو في حوض الاستحمام؛ سأفرك جسدك بالرغوة بيدي وشعري، ونتذوق القبلات تحت رذاذ الماء.", "psychologicalImpact": "كسر جدار غرفة النوم التقليدية والتواجد في بيئة دافئة ومنعشة تقلل التكلف وتزيد من التقارب الجسدي العفوي والمرح.", "steps": ["تجهيز الحمام بإضاءة خافتة (شموع آمنة) وموسيقى هادئة وتدفئة جيدة للغرفة.", "الدخول معاً تحت تدفق الماء الدافئ وغسل ظهر وشعر وجسد الشريك بعناية.", "استخدام صابون سائل ذو رغوة كثيفة لتدليك الصدر والأرداف بحركات حميمية.", "المداعبة والتقبيل مع تبلل الجسدين، مع إمكانية ممارسة الإيلاج الواقف المدعوم أو الانتقال بعد التجفيف للسرير الدافئ."], "tipsForCouples": "انتبهوا للسلامة والانزلاق؛ استخدام سجادة حمام مانعة للانزلاق ضروري جداً."}, {"id": 13, "title": "13. كبسولة الاعترافات والرغبات الخفية (The Intimate Confessions)", "tagline": "مشاركة خيال جنسي سري لم يجرؤ أحدكما على نطقه من قبل", "category": "romantic", "directCommand": "ضع رأسك على صدري؛ قل لي شيئاً واحداً تتمنى أن أفعله بك في السرير ولم تخبرني به أبداً بدافع الخجل، وأعدك أن نحققه الليلة دون أي حكم.", "psychologicalImpact": "يزيل العزلة الذهنية ويخلق مساحة أمان مطلقة بين الزوجين، مما يرفع منسوب الثقة والتقارب الروحي إلى مستويات غير مسبوقة.", "steps": ["الاستلقاء المتلاصق في الظلام بعد جولة مداعبة خفيفة لتهدئة الأعصاب.", "أن يبدأ أحد الطرفين بالبوح بشيء لطيف أو جريء يرغب به: وضعية معينة، لبس محدد، أو كلمة مثيرة.", "الاستماع دون سخرية أو اعتراض أو إشعار الطرف الآخر بالذنب.", "تنفيذ هذا الاعتراف فوراً أو وضعه كخطة لمغامرة الفراش التالية."], "tipsForCouples": "الأمان العاطفي هو سر الأداء الجنسي المذهل؛ عندما يشعر شريكك بأنه مقبول برغباته يمنحك كل ما يملك."}, {"id": 14, "title": "14. ليلة اللسان والأورال الملكي (Royal Oral Dedication)", "tagline": "تخصيص وقت كامل لإسعاد الشريك شفوياً دون انتظار مقابل فوري", "category": "deep", "directCommand": "استلقِ وافتح ساقيك، هذه الجلسة مكرسة بالكامل للسانك/لساني؛ أريد أن أغوص في تفاصيلك حتى ترتجف كل أطرافك من اللذة.", "psychologicalImpact": "يعبر عن التقدير والشغف العميق بالجسد ورائحته وطعمه، ويزيل أي عقد أو شعور بعدم الثقة بشأن المنطقة الحساسة.", "steps": ["النظافة الشخصية التامة واستخدام غسول لطيف برائحة مفضلة.", "التهيئة بالتقبيل حول المنطقة أولاً (الفخذين الداخليين والعانة وأسفل البطن).", "التركيز على البظر برقة متناهية ولعقات دائرية منتظمة، أو على رأس العضو والخصيتين بحركات شفط وبطء.", "اتباع تعليمات الشريك المباشرة بالإيماءات أو الصوت: 'استمر هكذا'، 'أسرع قليلاً'."], "tipsForCouples": "الاستمرارية بنفس الإيقاع عند اقتراب الشريك من النشوة هي المفتاح الذهبي؛ لا تغير السرعة فجأة عند اقتراب الذروة."}, {"id": 15, "title": "15. لعبة التجريد البطيء من الملابس (The Tease & Strip)", "tagline": "إطالة مرحلة خلع الملابس وتحويلها إلى عرض إغراء خاص", "category": "fun", "directCommand": "لا تخلع ملابسك بسرعة؛ انزع قطعة واحدة بأسنانك أو بيديك ببطء شديد، وأرني مفاتنك وأنت ترقص وتتحرك أمامي على وقع الموسيقى.", "psychologicalImpact": "يوقظ الشغف البصري ويجعل عملية التعري جزءاً أساسياً من المغازلة بدلاً من أن تكون خطوة روتينية سريعة في بداية اللقاء.", "steps": ["تشغيل موسيقى إيقاعية هادئة وجذابة.", "نزع الملابس قطعة بعد أخرى بتمهل، مع حركات دلال وتمايل ونظرات مغرية.", "الاقتراب من الشريك الجالس على حافة السرير وملامسته بالقطعة المنزوعة ثم إلقائها جانباً.", "ترك الملابس الداخلية كآخر محطة مع طلب المساعدة من الشريك لنزعها بأسنانه أو بيديه."], "tipsForCouples": "الثقة هي الجاذبية الحقيقية؛ تحرك بدلال وافخر بجسدك أمام من تحب."}, {"id": 16, "title": "16. العناق العاري المتصل ونبضات الصدر (Skin-to-Skin Fusion)", "tagline": "ملامسة الصدر العاري للصدر العاري بدون حائل", "category": "romantic", "directCommand": "تعال نتمدد عاريين تماماً، التصق بي بالكامل صدراً لبطن وفخذاً لفخذ، نلف الغطاء حولنا ونشعر بحرارة جلدنا دون حركة لـ 10 دقائق.", "psychologicalImpact": "أثبتت الدراسات أن التلامس الجلدي المباشر (Skin-to-Skin) يخفض هرمون الكورتيزول (هرمون الإجهاد) ويشبع الحاجة البيولوجية للأمان والانتماء.", "steps": ["التخلص التام من أي ملابس داخلية أو خارجية.", "الاستلقاء وجهاً لوجه أو أحدهما فوق الآخر بحيث تتطابق الأجساد تماماً.", "لف الغطاء الدافئ حول الجسدين لاحتجاز الحرارة الحميمية المشتركة.", "الهمس والتقبيل الخفيف للأكتاف والأذنين مع الشعور بنبضات القلب المشتركة."], "tipsForCouples": "تعتبر هذه الطريقة مدخلاً سحرياً لتهيئة الشريك المرهق أو المتردد لدخول أجواء اللقاء دون ضغط."}, {"id": 17, "title": "17. متعة ما قبل الدخول (The Edge of Penetration)", "tagline": "ملامسة أطراف الأعضاء وتحريكها خارجياً دون إيلاج حتى الغليان", "category": "deep", "directCommand": "ضع رأس زبك المبلل على شفتي فرجي وبظري، حركه بنعومة ذهاباً وإياباً، لا تدخله حتى أصرخ وأتوسل إليك أن تدخله.", "psychologicalImpact": "يضاعف الإفرازات الطبيعية لدى المرأة ويزيد من انتصاب الرجل إلى أقصى حد، ويحول اللحظة إلى لهفة متفجرة بدلاً من الإيلاج الآلي.", "steps": ["الوصول بالشريكين لمرحلة إثارة متقدمة بالمداعبة الفموية واليدوية.", "ملامسة العضو لشفتي المهبل من الخارج مع التحريك اللطيف على البظر.", "دخول رأس العضو فقط لبضعة مليمترات ثم الانسحاب ببطء شديد.", "الانتظار حتى يصبح الطلب صريحاً وملحاً من الطرفين، ثم الإيلاج التام بحركة عميقة واحدة."], "tipsForCouples": "التحكم في النفس هنا يتطلب صبراً، لكن المكافأة الحسية عند الدخول تفوق الوصف بمراحل."}, {"id": 18, "title": "18. ليلة الأماكن والمواقع غير المعتادة (Novel Locations)", "tagline": "الخروج من رتابة السرير إلى زوايا جديدة في المنزل", "category": "challenge", "directCommand": "الليلة لن نلمس السرير؛ سنمارس الحب على طاولة المطبخ، أو على الأريكة، أو على سجادة دافئة أمام التلفاز بإضاءة خافتة.", "psychologicalImpact": "الدماغ البشري يعشق الجدة (Novelty)؛ تغيير المكان يكسر الروابط العصبية القديمة للروتين ويفرز جرعات إضافية من الأدرينالين والإثارة.", "steps": ["اختيار مكان مختلف داخل المنزل تتوفر فيه الخصوصية والراحة.", "تجهيز المكان بوسائد مريحة أو بطانية ناعمة لحماية الظهر والركبتين.", "استغلال ارتفاعات الأثاث المختلفة (مثل طاولة المطبخ أو مسند الأريكة) لتطبيق أوضاع حميمية مريحة ومبتكرة.", "عيش اللحظة كعاشقين في مغامرة سرية وجديدة."], "tipsForCouples": "تأكدوا من قفل الأبواب والستائر لضمان الراحة النفسية التامة والاسترخاء."}, {"id": 19, "title": "19. لعبة بطاقات الأحكام الجريئة (Bed Truth or Dare)", "tagline": "تحويل غرفة النوم إلى ساحة مرح وضحك وتحديات ساخنة", "category": "fun", "directCommand": "اسحب بطاقة من عجلة الحظ؛ إما أن تجيب على سؤال حميمي محرج بصراحة تامة، أو تنفذ الحكم الجسدي المكتوب دون أي تراجع!", "psychologicalImpact": "الضحك والمرح يذيبان الجليد ويجعلان العلاقة الحميمية خفيفة وممتعة وغير مشحونة بالتوقعات الثقيلة، مما يسهل الوصول للنشوة.", "steps": ["استخدام عجلة الحظ أو زر البطاقة العشوائية في التطبيق.", "تطبيق التحدي بروح رياضية وشغف (مثل: لعق جزء معين، وضعية معينة، أو رقصة خاصة).", "إمكانية مضاعفة الرهان إذا تردد الشريك بإضافة حكم أكثر جرأة.", "الانتقال بسلاسة من الضحك والدعابة إلى القبلات الشغوفة والإثارة."], "tipsForCouples": "المرونة وتقبل الدعابة يجعلان الفراش مكاناً للسعادة والمرح وليس للواجبات فقط."}, {"id": 20, "title": "20. طقس العناق والرعاية اللاحقة (The Oxytocin Aftercare)", "tagline": "إغلاق اللقاء بأمان وحنان يضمن استمرار الشوق لليوم التالي", "category": "romantic", "directCommand": "بعد أن ننتهي؛ لا تدر ظهرك ولا تمسك بهاتفك، ابقَ محتضناً لي ويدك في شعري، لنشكر بعضنا على هذه المتعة ونغفو معاً ملتصقين.", "psychologicalImpact": "كثير من النساء (وحتى الرجال) يعانون من هبوط حاد في المزاج بعد النشوة (Post-coital dysphoria) إذا شعروا أن الطرف الآخر أدار ظهره أو انصرف فوراً؛ الرعاية اللاحقة تثبت أن الرغبة كانت في الشخص كإنسان وليس لمجرد تفريغ شهوة عابرة.", "steps": ["توفير مناديل مبللة دافئة أو ماء للشرب بالقرب من السرير للراحة السريعة.", "الاستلقاء في وضع الملعقة (Spooning) أو وضع رأس الشريك على الصدر.", "تبادل عبارات الامتنان والحب: 'كنت مذهلاً الليلة'، 'أحب قربك مني'.", "المسح بلطف على الظهر والشعر والكتفين حتى تستقر دقات القلب بهدوء وسكينة."], "tipsForCouples": "هذه الـ 10 دقائق بعد اللقاء هي ما يبني الألفة الزوجية طويلة الأمد، وتجعل كلاً منكما متلهفاً للمرة القادمة."}];
+    const RAW_CARDS = [{"id": "c1", "type": "deep", "text": "انظر إليّ وأنا أخلع ملابسي ببطء، قل لي بأي جزء من جسدي تريد أن تبدأ.", "target": "زوجة"}, {"id": "c2", "type": "deep", "text": "اجعلني أجلس على وجهك، أريد لسانك يدخل في فرجي ويخرج ببطء حتى أصرخ من اللذة.", "target": "زوجة"}, {"id": "c3", "type": "romantic", "text": "ضع أصابعك في فمي ثم أنزلها إلى صدري، ادلك حلمتيّ بلطف ثم امصهما.", "target": "زوجة"}, {"id": "c4", "type": "challenge", "text": "قف أمامي وانزع سروالك، أريد أن أرى زبك منتصباً، ثم دعه يدخل فمي ببطء.", "target": "زوجة"}, {"id": "c5", "type": "deep", "text": "استلقِ على ظهرك، سأجلس على زبك وأحرك وركي ببطء، لا تلمسني.", "target": "زوجة"}, {"id": "c6", "type": "deep", "text": "أدخل إصبعك في كسي، حركه ببطء ثم أضف إصبعاً آخر، لا تتوقف حتى أطلب منك ذلك.", "target": "زوجة"}, {"id": "c7", "type": "romantic", "text": "اكتب اسمك بلسانك على بشرتي، من رقبتي حتى فخذي، ثم امص مكان كل حرف.", "target": "زوجة"}, {"id": "c8", "type": "romantic", "text": "اختر الزيت العطري، دلك به جسدي كله، وركز على ثديي وبين فخذي.", "target": "زوجة"}, {"id": "c9", "type": "deep", "text": "اركع بين فخذيّ، افتح شفتيّ بيديك، ثم أدخل لسانك في فرجي وحركه بداخلي.", "target": "زوجة"}, {"id": "c10", "type": "challenge", "text": "اجعلني أنظر في المرآة وأنا أمارس الجنس معك من الخلف، أريد أن أرى وجهي.", "target": "زوجة"}, {"id": "c11", "type": "fun", "text": "أمسك شعري بقوة من الخلف وأنا راكعة، أدخل زبك في فمي حتى أختنق.", "target": "زوجة"}, {"id": "c12", "type": "deep", "text": "استلقِ واجعلني أركبك، لكن هذه المرة أنا من يتحكم بالسرعة.", "target": "زوجة"}, {"id": "c13", "type": "fun", "text": "ضع قطعة ثلج على حلمتي اليسرى، وبالتزامن امص الحلمة اليمنى.", "target": "زوجة"}, {"id": "c14", "type": "deep", "text": "همس في أذني بأقذر الكلمات التي تريد أن تفعلها بي، ثم افعلها فوراً.", "target": "زوجة"}, {"id": "c15", "type": "challenge", "text": "أغلق عينيّ واربط يديّ، ثم استخدم لسانك وأصابعك في كل جسدي.", "target": "زوجة"}, {"id": "c16", "type": "romantic", "text": "انزع ملابسي الداخلية بأسنانك، ثم امص مكان كل قطعة نزعتها.", "target": "زوجة"}, {"id": "c17", "type": "deep", "text": "اجعلني أستلقي على بطني، ضع الزيت على ظهري وأردافي، ثم أدخل إصبعك في كسي من الخلف.", "target": "زوجة"}, {"id": "c18", "type": "romantic", "text": "خذ يدي وضعها على زبك، علمني كيف تريد أن ألمسك.", "target": "زوجة"}, {"id": "c19", "type": "deep", "text": "قف أمامي وأنا جالسة على ركبتيّ، انظر إلى عينيّ وأنا ألعق زبك.", "target": "زوجة"}, {"id": "c20", "type": "challenge", "text": "أدخل زبك في فمي وأنا أنظر إليك، ثم أخرجه ببطء، قل لي 'امصصه'.", "target": "زوجة"}, {"id": "c21", "type": "deep", "text": "ارفع فخذيّ على كتفيك، أدخل فيّ بعمق، لا تتحرك فقط ابقَ بداخلي.", "target": "زوجة"}, {"id": "c22", "type": "deep", "text": "ضع وسادة تحت أردافي، اجعلني مرفوعة، ثم أدخل زبك في كسي بزاوية مختلفة.", "target": "زوجة"}, {"id": "c23", "type": "fun", "text": "أريدك أن تصرخ اسمي عندما تنزل، أريد الجيران أن يعرفوا من الذي يمنحك هذه المتعة.", "target": "زوجة"}, {"id": "c24", "type": "challenge", "text": "استخدم الحزام لربط يديّ إلى رأس السرير، ثم داعبني بيدك الأخرى.", "target": "زوجة"}, {"id": "c25", "type": "deep", "text": "قل لي أريدك أن تبصق على زبي ثم تدخله في فمك، ثم افعله وكأنك تتوق له.", "target": "زوجة"}, {"id": "c26", "type": "challenge", "text": "اجعلني أستلقي على حافة السرير وأنت واقف، أدخل زبك في فمي وأنا مقلوبة.", "target": "زوجة"}, {"id": "c27", "type": "deep", "text": "ضع رأس زبك على شفتيّ فرجي، لا تدخله، فقط حركه على بظرّي حتى أنزل.", "target": "زوجة"}, {"id": "c28", "type": "romantic", "text": "امص أصابعي واحدة واحدة، ثم أنزل بيدي إلى زبك وأنا أمصها.", "target": "زوجة"}, {"id": "c29", "type": "challenge", "text": "اجعلني أركع أمامك، افتح فمي، ابصق فيه ثم أدخل زبك.", "target": "زوجة"}, {"id": "c30", "type": "fun", "text": "اختر غرفة مختلفة في المنزل، اجعلني أستلقي على طاولة المطبخ وافعل بي ما تشاء.", "target": "زوجة"}, {"id": "c31", "type": "romantic", "text": "أغمض عينيّ، استخدم ريشة أو فرشاة ناعمة لمداعبتي.", "target": "زوجة"}, {"id": "c32", "type": "romantic", "text": "ضع يديّ على زبك، أمسك يديّ وحركها بالسرعة التي تريد.", "target": "زوجة"}, {"id": "c33", "type": "deep", "text": "اجلس على الكرسي، اجعلني أجلس على حجرك وظهري لك، حرك وركي ببطء.", "target": "زوجة"}, {"id": "c34", "type": "deep", "text": "أدخل إصبعين في كسي وإصبعاً في فمي في نفس الوقت.", "target": "زوجة"}, {"id": "c35", "type": "challenge", "text": "خذني من الخلف وأنا واقفة أمام النافذة، أريد أن أتخيل أن العالم يرانا.", "target": "زوجة"}, {"id": "c36", "type": "deep", "text": "ابصق على زبك ثم أدخله في فمي ببطء، أريد أن أتذوق مزيج لعابنا.", "target": "زوجة"}, {"id": "c37", "type": "deep", "text": "ارفع فخذيّ على صدرك، اضغط عليّ بقوة وأنت تدخل فيّ.", "target": "زوجة"}, {"id": "c38", "type": "challenge", "text": "قل لي 'انظري إلي' وأنا ألعق زبك، لا ترفع عينيك عن عيني.", "target": "زوجة"}, {"id": "c39", "type": "deep", "text": "اجعلني أستلقي على بطني، افتح أردافي بيديك، ثم أدخل لسانك في كسي من الخلف.", "target": "زوجة"}, {"id": "c40", "type": "romantic", "text": "ضع رأس زبك على فمي، ثم انزل ببطء على شفتيّ، لا تدخله حتى أتوسل.", "target": "زوجة"}, {"id": "c41", "type": "challenge", "text": "اربط عينيّ بوشاح، ثم استخدم فمك وأصابعك في جسدي.", "target": "زوجة"}, {"id": "c42", "type": "deep", "text": "اجلس على وجهي، أريد أن ألعق فرجك حتى ترتعشي.", "target": "زوجة"}, {"id": "c43", "type": "deep", "text": "ادفعي أردافك على وجهي، أريد أن أغوص بلساني في كسك.", "target": "زوج"}, {"id": "c44", "type": "deep", "text": "اجلسي على زبي وأنتِ تواجهينني، حركي وركك ببطء.", "target": "زوج"}, {"id": "c45", "type": "romantic", "text": "انزعي ملابسكِ ببطء أمامي، أديري جسدكِ لتريني كل جزء منكِ.", "target": "زوج"}, {"id": "c46", "type": "romantic", "text": "ضعي يدكِ على زبي من فوق ملابسي، اشعري به يكبر تحت يدكِ.", "target": "زوج"}, {"id": "c47", "type": "deep", "text": "اركعي بين فخذيّ، افتحي فمكِ، أريد أن أدخل زبي في فمكِ وأنتِ تنظرين إليّ.", "target": "زوج"}, {"id": "c48", "type": "deep", "text": "امصي زبي وكأنكِ تتوقين لطعمه، استخدمي لسانكِ حول الرأس.", "target": "زوج"}, {"id": "c49", "type": "deep", "text": "اجلسي على وجهي، أريد أن ألعق بظركِ حتى تصرخي.", "target": "زوج"}, {"id": "c50", "type": "deep", "text": "ادفعي كسكِ على فمي، حركيه كما تريدين، أنا هنا لأرضيكِ.", "target": "زوج"}, {"id": "c51", "type": "deep", "text": "اركعي أمامي، افتحي فمكِ، أدخل زبي في فمكِ ببطء.", "target": "زوج"}, {"id": "c52", "type": "challenge", "text": "انزعي سروالي بأسنانكِ، ثم انظري إليّ وأنتِ تخرجين زبي من ملابسي.", "target": "زوج"}, {"id": "c53", "type": "deep", "text": "استلقي على السرير، ارفعي فخذيكِ على كتفيّ، أدخل في كسكِ بعمق.", "target": "زوج"}, {"id": "c54", "type": "deep", "text": "امصي زبي وأنا أمسك بشعركِ، حركي رأسكِ بالسرعة التي أريدها.", "target": "زوج"}, {"id": "c55", "type": "deep", "text": "اجلسي على وجهي، أريد لساني أن يغوص في كسكِ.", "target": "زوج"}, {"id": "c56", "type": "romantic", "text": "ضعي زبي بين ثدييكِ، اضغطي عليهما وحركيه لأعلى وأسفل.", "target": "زوج"}, {"id": "c57", "type": "deep", "text": "استلقي على حافة السرير، افتحي فخذيكِ واسعاً، أدخل زبي في كسكِ من وضع الوقوف.", "target": "زوج"}, {"id": "c58", "type": "challenge", "text": "اركعي على ركبتيكِ، ضعي يديكِ خلف ظهركِ، افتحي فمكِ.", "target": "زوج"}, {"id": "c59", "type": "deep", "text": "امسحي بظركِ بأصابعكِ وأنا أنظر، أرييني كيف تلمسين نفسكِ.", "target": "زوج"}, {"id": "c60", "type": "deep", "text": "استلقي على بطنكِ، افتحي أردافكِ بيديّ، أدخل زبي في كسكِ من الخلف ببطء.", "target": "زوج"}, {"id": "c61", "type": "deep", "text": "اجلسي على وجهي وظهركِ لي، انحني للأمام حتى أصل بلساني إلى بظركِ.", "target": "زوج"}, {"id": "c62", "type": "fun", "text": "انزعي ملابسكِ الداخلية وأعطيها لي، سأضعها تحت وسادتي.", "target": "زوج"}, {"id": "c63", "type": "challenge", "text": "قفي أمام المرآة، أدخلي أصابعكِ في كسكِ وأنا واقف خلفكِ.", "target": "زوج"}, {"id": "c64", "type": "deep", "text": "اركعي بين فخذيّ، ضعي شفتيكِ حول زبي، ابصقي عليه ثم امصيه ببطء.", "target": "زوج"}, {"id": "c65", "type": "romantic", "text": "استلقي وارفعي فخذيكِ على صدري، أدخل في كسكِ وأنا أقبل رقبتكِ.", "target": "زوج"}, {"id": "c66", "type": "deep", "text": "أديري ظهركِ لي، انحني للأمام، أمسك بخصركِ وأدخل في كسكِ من الخلف بقوة.", "target": "زوج"}, {"id": "c67", "type": "deep", "text": "اجلسي على زبي وأنتِ تواجهينني، ضعي يديكِ على صدري، حركي ورككِ.", "target": "زوج"}, {"id": "c68", "type": "romantic", "text": "امصي أصابعي كما لو كانت زبي، ثم أنزلي يدي إلى كسكِ.", "target": "زوج"}, {"id": "c69", "type": "deep", "text": "قفي على أربع، أدخل زبي في كسكِ من الخلف، ثم مدي يدكِ ودلكي بظركِ.", "target": "زوج"}, {"id": "c70", "type": "fun", "text": "ضعي قطعة ثلج في فمكِ ثم امصي زبي، أشعر بالبرد على جلدي ثم دفء فمكِ.", "target": "زوج"}, {"id": "c71", "type": "romantic", "text": "استلقي على ظهركِ، افتحي فخذيكِ على شكل حرف V، أريد أن أتفرج على كسكِ.", "target": "زوج"}, {"id": "c72", "type": "challenge", "text": "اربطي عينيّ بوشاح، ثم استخدمي فمكِ ويديكِ في جسدي.", "target": "زوج"}, {"id": "c73", "type": "deep", "text": "اجلسي على وجهي، أريد أن ألعق كسكِ حتى تنزلي.", "target": "زوج"}, {"id": "c74", "type": "romantic", "text": "انزعي قميصي بأسنانكِ، ثم انزلي بقبلاتكِ من رقبتي حتى زبي.", "target": "زوج"}, {"id": "c75", "type": "deep", "text": "ضعي زبي في فمكِ وأنا نائم، أيقظيني بطعمكِ في حلقي.", "target": "زوج"}, {"id": "c76", "type": "deep", "text": "استلقي على جنبكِ، أدخل في كسكِ من الخلف وأنا ألمس بظركِ بأصابعي.", "target": "زوج"}, {"id": "c77", "type": "deep", "text": "اركعي أمامي، افتحي فمكِ، ابصقي على زبي ثم أدخليه ببطء.", "target": "زوج"}, {"id": "c78", "type": "challenge", "text": "اجلسي على كرسي، افتحي فخذيكِ، أدخلي أصابعكِ في كسكِ وأنا راكع أمامكِ.", "target": "زوج"}, {"id": "c79", "type": "deep", "text": "امصي زبي وأنا أتفرج، لا تستعجلي، دعي لعابكِ يغطيه بالكامل.", "target": "زوج"}, {"id": "c80", "type": "challenge", "text": "قفي على أربع أمام المرآة، انظري إلى وجهكِ وأنا أدخل في كسكِ من الخلف.", "target": "زوج"}, {"id": "c81", "type": "deep", "text": "ضعي رأس زبي على بظركِ، حركيه حوله دون أن تدخليه حتى تطلبي.", "target": "زوج"}, {"id": "c82", "type": "deep", "text": "ارفعي فخذيكِ على كتفيّ وأنا واقف، أدخلكِ على الحائط.", "target": "زوج"}, {"id": "c83", "type": "deep", "text": "امصي زبي وأنا أتحدث معكِ، قولي لي بأقذر الكلمات ماذا تريدين.", "target": "زوج"}, {"id": "c84", "type": "romantic", "text": "استلقي على بطرف السرير، افتحي فخذيكِ، أدخل في كسكِ وأنا أقبل أصابع قدميكِ.", "target": "زوج"}, {"id": "c85", "type": "challenge", "text": "اركعي، ضعي يديكِ على الأرض، افتحي فمكِ، أريد أن أدخل زبي في فمكِ من فوق.", "target": "زوج"}, {"id": "c86", "type": "deep", "text": "اجلسي على زبي وظهركِ لي، انظري في المرآة، أرييني كيف تركبينني.", "target": "زوج"}, {"id": "c87", "type": "romantic", "text": "امصي خصيتيّ ببطء، استخدمي لسانكِ حولهما قبل أن تصعدي إلى زبي.", "target": "زوج"}, {"id": "c88", "type": "romantic", "text": "قفي أمامي، انظري إلى عينيّ وأنتِ تنزلين بيدكِ إلى زبي.", "target": "زوج"}, {"id": "c89", "type": "challenge", "text": "استلقي على السرير، اربطي عينيّ بيديكِ، ثم أنزلي بفمكِ إلى زبي.", "target": "زوج"}, {"id": "c90", "type": "deep", "text": "اجلسي على وجهي وظهركِ لي، انحني حتى أصل بلساني إلى بظركِ من الخلف.", "target": "زوج"}, {"id": "c91", "type": "deep", "text": "ضعي زبي بين شفتيّ كسكِ، لا تدخليه، فقط حركيه عليه.", "target": "زوج"}, {"id": "c92", "type": "challenge", "text": "اركعي أمامي، افتحي فمكِ، قولي لي 'أدخله' ثم ادخليه بقوة.", "target": "زوج"}, {"id": "c93", "type": "deep", "text": "امصي زبي وأنا أمسك بشعركِ، أنا من يتحكم بالسرعة.", "target": "زوج"}, {"id": "c94", "type": "deep", "text": "استلقي على بطنكِ، افتحي أردافكِ، أدخل لساني في كسكِ من الخلف.", "target": "زوج"}, {"id": "c95", "type": "deep", "text": "اجلسي على زبي، ضعي يديكِ على صدري، انظري إليّ وأنا أداعب ثدييكِ.", "target": "زوج"}, {"id": "c96", "type": "challenge", "text": "قفي على أربع، انظري إلى المرآة، أرييني وجهكِ وأنا أدخل في كسكِ.", "target": "زوج"}, {"id": "c97", "type": "fun", "text": "امصي زبي وأنا أتصل بشخص ما، اجعلي صوتي يرتجف وهم يسمعوني.", "target": "زوج"}, {"id": "c98", "type": "deep", "text": "استلقي على جانبي، أدخلي زبي في كسكِ من الخلف، دعي فخذيكِ تلامسان بعضهما.", "target": "زوج"}, {"id": "c99", "type": "deep", "text": "اركعي، مدي لسانكِ، أريد أن أضرب زبي على لسانكِ قبل أن أدخله.", "target": "زوج"}, {"id": "c100", "type": "deep", "text": "اجلسي على وجهي، لا تتحركي، فقط دعي لساني يعمل في كسكِ.", "target": "زوج"}, {"id": "m1", "type": "deep", "text": "استلقِ معي على الأرض، تدحرج معي وأنا لا أفارق فمك.", "target": "كلاهما"}, {"id": "m2", "type": "deep", "text": "اجعلني أجلس على حجركِ وأنتِ تجلسين على حجري في نفس الوقت.", "target": "كلاهما"}, {"id": "m3", "type": "deep", "text": "تعالَ خلفي وأنا خلفكِ، ظهرنا ملتصق، نمد أيدينا خلفنا لنتلمس بعضنا.", "target": "كلاهما"}, {"id": "m4", "type": "challenge", "text": "أغمض عينيّ واربط عينيكِ أيضاً، لنتلمس بعضنا باللسان فقط.", "target": "كلاهما"}, {"id": "m5", "type": "romantic", "text": "استلقِ بجانبي، لا يلمس جسدنا بعضه إلا بأطراف أصابعنا.", "target": "كلاهما"}, {"id": "m6", "type": "deep", "text": "اركع أمامي وأنا راكعة أمامكِ، ندخل أصابعنا في أفواه بعضنا.", "target": "كلاهما"}, {"id": "m7", "type": "challenge", "text": "قف مقابلِي، أمسك بيدي وأنا أمسك بيدكِ، لا نفارق نظر بعضنا.", "target": "كلاهما"}, {"id": "m8", "type": "fun", "text": "اجلس على كرسي وأنا أجلس على كرسي مقابلك، أقدامنا تتلامس.", "target": "كلاهما"}, {"id": "m9", "type": "deep", "text": "استلقِ على السرير وأنا أستلقي فوقكِ بالعرض، نلعق بعضنا في نفس الوقت.", "target": "كلاهما"}, {"id": "m10", "type": "deep", "text": "قف وأنا أقف خلفكِ، أمسك زبي من الخلف وأدخله بين فخذيكِ.", "target": "كلاهما"}, {"id": "m11", "type": "romantic", "text": "تعالَ نستحم معاً، ندهن بعضنا بالصابون، لا نترك سنتيمتراً دون أن نلمسه.", "target": "كلاهما"}, {"id": "m12", "type": "deep", "text": "اركع أمامي وأنا راكعة أمامكِ، وجهي ملتصق بكسكِ ووجهكِ ملتصق بزبي.", "target": "كلاهما"}, {"id": "m13", "type": "deep", "text": "استلقِ على ظهرك، أجلس على زبك وأنا مقلوبة وظهري لك.", "target": "كلاهما"}, {"id": "m14", "type": "deep", "text": "قف على أربع وأنا أقف على أربع، وجوهنا متقابلة، نتقدم نحو بعضنا.", "target": "كلاهما"}, {"id": "m15", "type": "deep", "text": "اجلس على حافة السرير، أستلقي على الأرض بين فخذيكِ.", "target": "كلاهما"}, {"id": "m16", "type": "deep", "text": "استلقِ على ظهرك، أستلقي فوقكِ بالعكس، نمسك بعضنا من الأفخاذ.", "target": "كلاهما"}, {"id": "m17", "type": "challenge", "text": "قف مقابل المرآة، أقف خلفكِ، تضعين يديكِ على المرآة وأنا أدخل في كسكِ.", "target": "كلاهما"}, {"id": "m18", "type": "fun", "text": "تعالَ نتبادل الأدوار، دقيقة أنا المسيطر ودقيقة أنتِ المسيطرة.", "target": "كلاهما"}, {"id": "m19", "type": "deep", "text": "استلقِ على الأرض، أجلس فوق وجهكِ، ثم أنزل بفمي على زبك.", "target": "كلاهما"}, {"id": "m20", "type": "deep", "text": "اجلس على الكرسي، أجلس على حجركِ ووجهي لك، ندخل ألسنتنا في أفواه بعضنا.", "target": "كلاهما"}, {"id": "m21", "type": "challenge", "text": "قف على يديكِ ورجليكِ على الحائط، أدخل من الأمام وأنا أحملكِ.", "target": "كلاهما"}, {"id": "m22", "type": "romantic", "text": "استلقِ على ظهرك، أستلقي عليكِ بنفس الاتجاه، ندخل أيدينا بين جسدينا.", "target": "كلاهما"}, {"id": "m23", "type": "fun", "text": "تعالَ إلى المطبخ، أجلسكِ على الطاولة، أقف بين فخذيكِ.", "target": "كلاهما"}, {"id": "m24", "type": "deep", "text": "اجلس على الأرض، أجلس خلفكِ، أضمكِ بين فخذيّ، أدخل أصابعي في كسكِ.", "target": "كلاهما"}, {"id": "m25", "type": "deep", "text": "قف على الدرج، أركع على درجة أقل، ألعق كسكِ وأنتِ تمسكين برأسي.", "target": "كلاهما"}, {"id": "m26", "type": "romantic", "text": "استلقِ على الأريكة، أستلقي فوقكِ، أضع زبي بين شفتيّ كسكِ ولا أدخله.", "target": "كلاهما"}, {"id": "m27", "type": "challenge", "text": "تعالَ إلى الحمام المظلم، لا نرى بعضنا، نبحث عن مناطق بعضنا باللمس فقط.", "target": "كلاهما"}, {"id": "m28", "type": "deep", "text": "اركع أمامي، أمسك بيديّ من الخلف، أدخل زبي في فمكِ وأنا واقف.", "target": "كلاهما"}, {"id": "m29", "type": "deep", "text": "اجلس على السرير، أجلس على حجركِ وظهري لك، تضعين يديكِ على ثدييّ.", "target": "كلاهما"}, {"id": "m30", "type": "deep", "text": "قف مقابل المرآة وأنا خلفكِ، تمسكين بيدي وتضعينها على بظركِ.", "target": "كلاهما"}, {"id": "m31", "type": "deep", "text": "استلقِ على ظهرك، أستلقي على جنبي بجانبك، أدخل أصابعي في كسكِ.", "target": "كلاهما"}, {"id": "m32", "type": "fun", "text": "تعالَ نرقص معاً عاريين، جسدنا يلتصق ببعضه، نتحرك على إيقاع الموسيقى.", "target": "كلاهما"}, {"id": "m33", "type": "romantic", "text": "اجلس على الكرسي الهزاز، أجلس على حجركِ، نتحرك مع هزات الكرسي.", "target": "كلاهما"}, {"id": "m34", "type": "romantic", "text": "قف وأنا واقفة، نلتصق ببعضنا من الأمام، نضع أيدينا على أرداف بعضنا.", "target": "كلاهما"}, {"id": "m35", "type": "deep", "text": "استلقِ على السرير، أستلقي فوقكِ بالعرض، رأسي عند زبك ورأسكِ عند ثدييّ.", "target": "كلاهما"}, {"id": "m36", "type": "challenge", "text": "تعالَ إلى الشرفة ليلاً، أقف خلفكِ، تضعين يديكِ على الدرابزين.", "target": "كلاهما"}, {"id": "m37", "type": "deep", "text": "اركع أمامي وأنا راكعة أمامكِ، نضع ألسنتنا على أعضاء بعضنا في نفس الوقت.", "target": "كلاهما"}, {"id": "m38", "type": "deep", "text": "اجلس على الأرض، أجلس خلفكِ، أفتح فخذيكِ بقدميّ، أدخل أصابعي في كسكِ.", "target": "كلاهما"}, {"id": "m39", "type": "deep", "text": "قف وأنا أقف خلفكِ، ننظر في المرآة، تمسكين زبي وتدخلينه في كسكِ بنفسكِ.", "target": "كلاهما"}, {"id": "m40", "type": "deep", "text": "استلقِ على بطرف السرير، أركع بين فخذيكِ، أدخل زبي في كسكِ وأنا أقبل قدميكِ.", "target": "كلاهما"}, {"id": "m41", "type": "fun", "text": "تعالَ نتبادل الأدوار، اليوم أنا عبدكِ وأنتِ سيدتي، افعلي بي ما تريدين.", "target": "كلاهما"}, {"id": "m42", "type": "deep", "text": "اجلس على الكرسي، أجلس على الأرض بين فخذيكِ، ألعق زبك وأنتِ تلمسين شعري.", "target": "كلاهما"}, {"id": "m43", "type": "challenge", "text": "قف على يديكِ ورجليكِ على السرير، أدخل من الخلف وأنا أحتضن فخذيكِ.", "target": "كلاهما"}, {"id": "m44", "type": "deep", "text": "استلقِ على ظهرك، أستلقي عليكِ بنفس الاتجاه، أرفع فخذيكِ على صدري.", "target": "كلاهما"}, {"id": "m45", "type": "fun", "text": "تعالَ إلى السيارة، اجلس في المقعد الخلفي، أجلس على حجركِ والزجاج ضبابي.", "target": "كلاهما"}, {"id": "m46", "type": "deep", "text": "اركع أمامي، أمسك برأسكِ بيدي، أدخل زبي في فمكِ ببطء، انظري إليّ.", "target": "كلاهما"}, {"id": "m47", "type": "deep", "text": "اجلس على الأرض، أجلس خلفكِ، أضع وسادة تحت أردافكِ، أدخل أصابعي في كسكِ.", "target": "كلاهما"}, {"id": "m48", "type": "challenge", "text": "قف على أربع أمام المرآة، أقف خلفكِ، انظري إلى عينيّ في المرآة.", "target": "كلاهما"}, {"id": "m49", "type": "romantic", "text": "استلقِ على السرير، أستلقي فوقكِ، أضع زبي على بظركِ وأحركه عليه دون إيلاج.", "target": "كلاهما"}, {"id": "m50", "type": "romantic", "text": "تعالَ ننام عاريين، أجسادنا ملتصقة، زبي بين فخذيكِ، لا نتحرك.", "target": "كلاهما"}, {"id": "new-idea-1", "type": "deep", "text": "💡 فكرة تطبيقية #1: استلقِ أمامي بدون ملابس؛ ممنوع الإيلاج لمدة 20 دقيقة كاملة، سنكتشف فقط باللمس والأنفاس كل سنتيمتر من الجسد حتى نصل لدرجة التوسل.", "categoryName": "1. طقس تحريم الإيلاج المؤقت (Sensory Mapping)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-2", "type": "challenge", "text": "💡 فكرة تطبيقية #2: اربط عيني بوشاح حريري ناعم، لا أرى شيئاً، واستخدم يديك ولسانك ومفاجآتك الجسدية كيفما تشاء دون سابق إنذار.", "categoryName": "2. لعبة تعصيب العينين ومسرح الحواس (Blindfolded Senses)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-3", "type": "romantic", "text": "💡 فكرة تطبيقية #3: اجلس مقابلي ركبة إلى ركبة، ضع يدك على قلبي ويدي على قلبك، ننظر لعيون بعضنا ونتنفس بنفس الشهيق والزفير لدقيقتين كاملتين دون كلام.", "categoryName": "3. التنفس التانتري والمحاذاة القلبية (Eye & Breath Sync)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-4", "type": "fun", "text": "💡 فكرة تطبيقية #4: ضع قطعة ثلج في فمك أو مررها على حلمتي ورقبتي وبطني، ثم الحَق أثرها فوراً بلسانك الدافئ وأنفاسك الحارة.", "categoryName": "4. تباين الثلج واللهب (Thermal Sensory Contrast)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-5", "type": "deep", "text": "💡 فكرة تطبيقية #5: لا تمارس الجنس معي بصمت الليلة؛ اهمس في أذني بما تشعر به أعضاؤك الآن، وسمّ كل جزء باسمه الحقيقي المثير، وأخبرني كم أنا مرغوب.", "categoryName": "5. بروتوكول الكلام الجريء المباشر (Sensual Dirty Talk)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-6", "type": "romantic", "text": "💡 فكرة تطبيقية #6: استلقِ على بطنك، سأسكب زيت المساج الدافئ على ظهرك وأردافك وفخذيك، وأدلكك بيدي وجسدي بالكامل حتى تستسلم تماماً.", "categoryName": "6. مساج الشموع الذائبة والزيوت الساخنة (Hot Oil Ritual)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-7", "type": "deep", "text": "💡 فكرة تطبيقية #7: ضع وسادتين تحت أسفل حوضي وارفع قدميّ على كتفيك، لنخوض تجربة إيلاج بزاوية عميقة جداً لم نجربها من قبل.", "categoryName": "7. هندسة الزوايا والوسائد الحميمية (Angles of Ecstasy)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-8", "type": "challenge", "text": "💡 فكرة تطبيقية #8: سأوصلك إلى حافة القذف أو النشوة حتى تبدأ بالارتعاش، ثم سأتوقف فجأة وأهدئك... سنكرر هذا 3 مرات قبل أن أسمح لك بالانفجار.", "categoryName": "8. فن حبس النشوة وتأخير الذروة (Sensual Edging)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-9", "type": "deep", "text": "💡 فكرة تطبيقية #9: قفي أمامي أمام المرآة الكبيرة؛ لا تنظري إلى الأسفل، انظري لعينيك ولجسدينا في المرآة وأنا أدخل فيكِ وأداعبكِ من الخلف.", "categoryName": "9. سيناريو المرآة والحضور البصري (The Mirror Protocol)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-10", "type": "romantic", "text": "💡 فكرة تطبيقية #10: استلقِ مسترخياً تماماً؛ سأرسم شفتي على جسدك في مسار متواصل يبدأ من باطن قدميك حتى جبينك، دون أن تفارق شفتاي بشرتك لحظة واحدة.", "categoryName": "10. تقبيل الخارطة الجسدية الكاملة (Head-to-Toe Kissing)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-11", "type": "challenge", "text": "💡 فكرة تطبيقية #11: الليلة لك كامل السيطرة؛ أنا طوع أمرك، تطلب ما تشتهي وأنا أنفذ، وسنتفق على كلمة سرية لو أردنا التوقف.", "categoryName": "11. تبادل أدوار السيطرة والاستسلام (Power Dynamic Play)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-12", "type": "fun", "text": "💡 فكرة تطبيقية #12: تعال معي تحت الدش الساخن أو في حوض الاستحمام؛ سأفرك جسدك بالرغوة بيدي وشعري، ونتذوق القبلات تحت رذاذ الماء.", "categoryName": "12. الحمام المائي الساخن والتدليك الرغوي (Hydro-Passion)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-13", "type": "romantic", "text": "💡 فكرة تطبيقية #13: ضع رأسك على صدري؛ قل لي شيئاً واحداً تتمنى أن أفعله بك في السرير ولم تخبرني به أبداً بدافع الخجل، وأعدك أن نحققه الليلة دون أي حكم.", "categoryName": "13. كبسولة الاعترافات والرغبات الخفية (The Intimate Confessions)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-14", "type": "deep", "text": "💡 فكرة تطبيقية #14: استلقِ وافتح ساقيك، هذه الجلسة مكرسة بالكامل للسانك/لساني؛ أريد أن أغوص في تفاصيلك حتى ترتجف كل أطرافك من اللذة.", "categoryName": "14. ليلة اللسان والأورال الملكي (Royal Oral Dedication)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-15", "type": "fun", "text": "💡 فكرة تطبيقية #15: لا تخلع ملابسك بسرعة؛ انزع قطعة واحدة بأسنانك أو بيديك ببطء شديد، وأرني مفاتنك وأنت ترقص وتتحرك أمامي على وقع الموسيقى.", "categoryName": "15. لعبة التجريد البطيء من الملابس (The Tease & Strip)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-16", "type": "romantic", "text": "💡 فكرة تطبيقية #16: تعال نتمدد عاريين تماماً، التصق بي بالكامل صدراً لبطن وفخذاً لفخذ، نلف الغطاء حولنا ونشعر بحرارة جلدنا دون حركة لـ 10 دقائق.", "categoryName": "16. العناق العاري المتصل ونبضات الصدر (Skin-to-Skin Fusion)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-17", "type": "deep", "text": "💡 فكرة تطبيقية #17: ضع رأس زبك المبلل على شفتي فرجي وبظري، حركه بنعومة ذهاباً وإياباً، لا تدخله حتى أصرخ وأتوسل إليك أن تدخله.", "categoryName": "17. متعة ما قبل الدخول (The Edge of Penetration)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-18", "type": "challenge", "text": "💡 فكرة تطبيقية #18: الليلة لن نلمس السرير؛ سنمارس الحب على طاولة المطبخ، أو على الأريكة، أو على سجادة دافئة أمام التلفاز بإضاءة خافتة.", "categoryName": "18. ليلة الأماكن والمواقع غير المعتادة (Novel Locations)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-19", "type": "fun", "text": "💡 فكرة تطبيقية #19: اسحب بطاقة من عجلة الحظ؛ إما أن تجيب على سؤال حميمي محرج بصراحة تامة، أو تنفذ الحكم الجسدي المكتوب دون أي تراجع!", "categoryName": "19. لعبة بطاقات الأحكام الجريئة (Bed Truth or Dare)", "target": "كلاهما", "isNewIdea": true}, {"id": "new-idea-20", "type": "romantic", "text": "💡 فكرة تطبيقية #20: بعد أن ننتهي؛ لا تدر ظهرك ولا تمسك بهاتفك، ابقَ محتضناً لي ويدك في شعري، لنشكر بعضنا على هذه المتعة ونغفو معاً ملتصقين.", "categoryName": "20. طقس العناق والرعاية اللاحقة (The Oxytocin Aftercare)", "target": "كلاهما", "isNewIdea": true}];
+
+    // State Variables
+    let allCards = [];
+    let favoritesSet = new Set();
+    let flippedCardsSet = new Set();
+    let currentCategory = 'all';
+    let currentTarget = 'all';
+    let showFavoritesOnly = false;
+    let privacyBlur = false;
+    let currentTurn = 'الزوج 👨';
+    let activeZoomCard = null;
+
+    // Dice Data
+    const DICE_ACTIONS = [
+      'تقبيل ومص عميق',
+      'تدليك بالزيت الدافئ',
+      'مداعبة باللسان فقط',
+      'تمرير مكعب ثلج ثم أنفاس حارة',
+      'عضات رقيقة وقرص لطيف',
+      'همس بكلمات شهوانية في الأذن',
+      'ملامسة خفيفة بأطراف الأصابع أو بريشة',
+      'مص ولعق دائري بطيء'
+    ];
+    const DICE_ZONES = [
+      'الرقبة وشحمة الأذن',
+      'الحلمتين والقفص الصدري',
+      'شفتي الفرج والبظر',
+      'رأس العضو والخصيتين',
+      'الفخذين الداخليين وأسفل البطن',
+      'الظهر ومحيط العمود الفقري',
+      'الأرداف وما بينهما',
+      'باطن القدمين وأصابع اليدين'
+    ];
+    const DICE_DURATIONS = [
+      'دقيقة كاملة دون توقف',
+      '3 دقائق ببطء شديد',
+      '5 دقائق مع إغماض العينين',
+      'حتى يطلب الشريك التوقف أو الصراخ',
+      'دقيقتين مع حبس الأنفاس والهمس'
+    ];
+
+    // Initialization
+    function exitCardsApp() {
+      try {
+        if (window.parent && window.parent !== window && typeof window.parent.closeCardsProject === "function") {
+          window.parent.closeCardsProject();
+          return;
+        }
+      } catch(e) {}
+      try {
+        const target = new URL("index.html", window.location.href).href;
+        window.location.href = target;
+      } catch(e) {
+        window.location.href = "./index.html";
+      }
+    }
+
+    function initApp() {
+      // Load favorites from localStorage
+      try {
+        const favs = localStorage.getItem('couples_fav_cards');
+        if (favs) favoritesSet = new Set(JSON.parse(favs));
+      } catch(e) {}
+
+      // Load custom cards
+      let customCards = [];
+      try {
+        const stored = localStorage.getItem('couples_custom_cards');
+        if (stored) customCards = JSON.parse(stored);
+      } catch(e) {}
+
+      allCards = [...customCards, ...RAW_CARDS];
+      updateCounts();
+      renderCards();
+      renderGuide();
+      initWheel();
+      updateFavsCount();
+    }
+
+    // Toast Function
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-msg';
+      toast.innerHTML = '✨ ' + msg;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.transition = 'opacity 0.3s, transform 0.3s';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px) scale(0.9)';
+        setTimeout(() => toast.remove(), 300);
+      }, 2600);
+    }
+
+    // Turn Control
+    function toggleTurn() {
+      currentTurn = (currentTurn === 'الزوج 👨') ? 'الزوجة 👩' : 'الزوج 👨';
+      document.getElementById('turnLabel').textContent = 'الدور الآن: ' + currentTurn;
+      showToast('تبادل الأدوار! الدور الآن على ' + currentTurn);
+      AudioSystem.playTick();
+    }
+
+    // Privacy Control
+    function togglePrivacy() {
+      privacyBlur = !privacyBlur;
+      const btn = document.getElementById('privacyBtn');
+      const icon = document.getElementById('privacyIcon');
+      if (privacyBlur) {
+        btn.classList.add('glass-active');
+        icon.textContent = '👁️';
+        showToast('تم تفعيل وضع الخصوصية: النصوص مخفية حتى تمرير الفأرة أو اللمس.');
+      } else {
+        btn.classList.remove('glass-active');
+        icon.textContent = '🙈';
+        showToast('تم إيقاف وضع الخصوصية: النصوص ظاهرة الآن.');
+      }
+      renderCards();
+    }
+
+    // Sound Control
+    function toggleSound() {
+      AudioSystem.enabled = !AudioSystem.enabled;
+      document.getElementById('soundIcon').textContent = AudioSystem.enabled ? '🔊' : '🔇';
+      showToast(AudioSystem.enabled ? 'تم تشغيل المؤثرات الصوتية 🔊' : 'تم كتم الصوت 🔇');
+    }
+
+    // Category Label & Badge Helpers
+    function getCategoryBadge(type) {
+      switch(type) {
+        case 'romantic': return '<span class="badge badge-romantic">💖 رومانسية وعاطفة</span>';
+        case 'challenge': return '<span class="badge badge-challenge">⚡ تحديات الفراش</span>';
+        default: return '<span class="badge badge-deep">🔥 حميمية عميقة وجريئة</span>';
+      }
+    }
+    function getCategoryName(type) {
+      switch(type) {
+        case 'romantic': return 'رومانسية وعاطفة';
+        case 'challenge': return 'تحديات الفراش';
+        default: return 'حميمية عميقة';
+      }
+    }
+
+    // Card Counts
+    function updateCounts() {
+      document.getElementById('countAll').textContent = allCards.length;
+      updateFavsCount();
+    }
+    function updateFavsCount() {
+      document.getElementById('favsCount').textContent = favoritesSet.size;
+    }
+
+    // Category & Target Filters
+    function setCategoryFilter(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.filter-cat-btn').forEach(btn => {
+        if (btn.getAttribute('data-cat') === cat) btn.classList.add('glass-active');
+        else btn.classList.remove('glass-active');
+      });
+      renderCards();
+    }
+    function setTargetFilter(target) {
+      currentTarget = target;
+      document.querySelectorAll('.filter-target-btn').forEach(btn => {
+        if (btn.getAttribute('data-target') === target) btn.classList.add('glass-active');
+        else btn.classList.remove('glass-active');
+      });
+      renderCards();
+    }
+    function toggleFavoritesOnly() {
+      showFavoritesOnly = !showFavoritesOnly;
+      const btn = document.getElementById('favsToggleBtn');
+      if (showFavoritesOnly) btn.classList.add('glass-active');
+      else btn.classList.remove('glass-active');
+      renderCards();
+    }
+
+    // Render Cards Grid
+    function renderCards() {
+      const grid = document.getElementById('cardsGrid');
+      const emptyState = document.getElementById('cardsEmptyState');
+      grid.innerHTML = '';
+
+      let filtered = allCards.filter(c => {
+        const matchCat = (currentCategory === 'all' || c.type === currentCategory);
+        const matchTarget = (currentTarget === 'all' || c.target === currentTarget || c.target === 'كلاهما');
+        const matchFav = (!showFavoritesOnly || favoritesSet.has(c.id));
+        return matchCat && matchTarget && matchFav;
+      });
+
+      if (filtered.length === 0) {
+        emptyState.style.display = 'block';
+        return;
+      }
+      emptyState.style.display = 'none';
+
+      filtered.forEach((card, index) => {
+        const isFlipped = flippedCardsSet.has(card.id);
+        const isFav = favoritesSet.has(card.id);
+        const blurClass = privacyBlur ? 'privacy-blurred' : '';
+
+        const scene = document.createElement('div');
+        scene.className = 'card-scene';
+
+        scene.innerHTML = `
+          <div class="card-inner ${isFlipped ? 'is-flipped' : ''}" id="card-inner-${card.id}">
+            
+            <!-- FRONT FACE -->
+            <div class="card-face card-front" onclick="flipCard('${card.id}')">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                ${getCategoryBadge(card.type)}
+                <span style="font-size: 0.72rem; color: #fda4af; opacity: 0.7;">#${index + 1}</span>
+              </div>
+
+              <div style="text-align: center; margin: auto 0; padding: 10px 0;">
+                <div style="font-size: 34px; margin-bottom: 6px; filter: drop-shadow(0 4px 10px rgba(244,63,94,0.4));">
+                  ${card.isNewIdea ? '💡' : (card.type === 'romantic' ? '💖' : (card.type === 'challenge' ? '⚡' : '🔥'))}
+                </div>
+                <div style="font-size: 0.95rem; font-weight: 800; color: #fff;">
+                  ${card.isNewIdea ? (card.categoryName || 'فكرة تطبيقية') : 'سر الفراش والحميمية'}
+                </div>
+                <div style="font-size: 0.75rem; color: #fda4af; margin-top: 4px;">
+                  انقر للكشف عن الأمر 👆
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
+                <span style="font-size: 0.7rem; color: #f472b6;">موجه لـ: ${card.target || 'الطرفين'}</span>
+                <span style="font-size: 0.72rem; color: #fda4af;">🔐 سري وخاص</span>
+              </div>
+            </div>
+
+            <!-- BACK FACE -->
+            <div class="card-face card-back">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                ${getCategoryBadge(card.type)}
+                <button onclick="toggleFav(event, '${card.id}')" style="background: none; border: none; font-size: 1.15rem; cursor: pointer; color: ${isFav ? '#f59e0b' : 'rgba(255,255,255,0.4)'};" title="حفظ في المفضلة">
+                  ${isFav ? '★' : '☆'}
+                </button>
+              </div>
+
+              <!-- Command text -->
+              <div onclick="flipCard('${card.id}')" style="margin: auto 0; padding: 8px 0; text-align: center;">
+                <p class="${blurClass}" style="font-size: 0.92rem; font-weight: 800; color: #fff; line-height: 1.5; margin: 0;">
+                  ${card.text}
+                </p>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 8px;">
+                <button onclick="zoomCard('${card.id}')" class="btn-action" style="padding: 4px 8px; font-size: 0.72rem;">
+                  🔍 عرض مكبر
+                </button>
+                <button onclick="flipCard('${card.id}')" style="background: none; border: none; font-size: 0.72rem; color: #fda4af; cursor: pointer;">
+                  ↺ قلب البطاقة
+                </button>
+              </div>
+            </div>
+
+          </div>
+        `;
+
+        grid.appendChild(scene);
+      });
+    }
+
+    // Flip Card Action
+    function flipCard(id) {
+      const inner = document.getElementById('card-inner-' + id);
+      if (!inner) return;
+      if (flippedCardsSet.has(id)) {
+        flippedCardsSet.delete(id);
+        inner.classList.remove('is-flipped');
+      } else {
+        flippedCardsSet.add(id);
+        inner.classList.add('is-flipped');
+        AudioSystem.playFlip();
+      }
+    }
+
+    // Toggle Favorite Action
+    function toggleFav(e, id) {
+      if (e) e.stopPropagation();
+      if (favoritesSet.has(id)) {
+        favoritesSet.delete(id);
+        showToast('تمت الإزالة من المفضلة');
+      } else {
+        favoritesSet.add(id);
+        showToast('تمت الإضافة للمفضلة ⭐');
+      }
+      try {
+        localStorage.setItem('couples_fav_cards', JSON.stringify(Array.from(favoritesSet)));
+      } catch(err) {}
+      updateFavsCount();
+      renderCards();
+    }
+
+    // Zoom Modal
+    function zoomCard(id) {
+      const card = allCards.find(c => c.id === id);
+      if (!card) return;
+      activeZoomCard = card;
+
+      document.getElementById('zoomCategoryBadge').className = 'badge ' + (card.type === 'romantic' ? 'badge-romantic' : (card.type === 'challenge' ? 'badge-challenge' : 'badge-deep'));
+      document.getElementById('zoomCategoryBadge').textContent = getCategoryName(card.type);
+      document.getElementById('zoomTargetBadge').textContent = 'موجه إلى: ' + (card.target || 'كلاهما');
+      document.getElementById('zoomCardText').textContent = card.text;
+
+      const isFav = favoritesSet.has(card.id);
+      document.getElementById('zoomFavBtn').textContent = isFav ? '★ في المفضلة' : '☆ حفظ بالمفضلة';
+      document.getElementById('zoomFavBtn').style.color = isFav ? '#f59e0b' : '#fff';
+
+      document.getElementById('zoomModal').style.display = 'flex';
+      AudioSystem.playFlip();
+    }
+    function closeZoomModal() {
+      document.getElementById('zoomModal').style.display = 'none';
+      activeZoomCard = null;
+    }
+    function copyZoomText() {
+      if (!activeZoomCard) return;
+      navigator.clipboard.writeText(activeZoomCard.text).then(() => {
+        showToast('تم نسخ الأمر إلى الحافظة بنجاح 📋');
+      }).catch(() => {
+        showToast('تم نسخ الأمر');
+      });
+    }
+    function toggleZoomFav() {
+      if (!activeZoomCard) return;
+      toggleFav(null, activeZoomCard.id);
+      const isFav = favoritesSet.has(activeZoomCard.id);
+      document.getElementById('zoomFavBtn').textContent = isFav ? '★ في المفضلة' : '☆ حفظ بالمفضلة';
+      document.getElementById('zoomFavBtn').style.color = isFav ? '#f59e0b' : '#fff';
+    }
+    function completeZoomCard() {
+      AudioSystem.playFanfare();
+      showToast('أحسنتم! تم تنفيذ التحدي بنجاح 🔥💖');
+      closeZoomModal();
+    }
+
+    // Draw Random Card
+    function drawRandomCard() {
+      let available = allCards.filter(c => {
+        const matchCat = (currentCategory === 'all' || c.type === currentCategory);
+        const matchTarget = (currentTarget === 'all' || c.target === currentTarget || c.target === 'كلاهما');
+        return matchCat && matchTarget;
+      });
+      if (available.length === 0) available = allCards;
+      const pick = available[Math.floor(Math.random() * available.length)];
+      if (pick) {
+        flippedCardsSet.add(pick.id);
+        renderCards();
+        zoomCard(pick.id);
+      }
+    }
+
+    // Shuffle Cards
+    function shuffleCards() {
+      AudioSystem.playFlip();
+      allCards.sort(() => Math.random() - 0.5);
+      flippedCardsSet.clear();
+      showToast('🔀 تم خلط جميع البطاقات بنجاح!');
+      renderCards();
+    }
+
+    // Custom Card Modal
+    function openCustomCardModal() {
+      document.getElementById('customCardInput').value = '';
+      document.getElementById('customCardModal').style.display = 'flex';
+    }
+    function closeCustomCardModal() {
+      document.getElementById('customCardModal').style.display = 'none';
+    }
+    function saveCustomCard() {
+      const text = document.getElementById('customCardInput').value.trim();
+      const cat = document.getElementById('customCardCat').value;
+      const target = document.getElementById('customCardTarget').value;
+
+      if (!text) {
+        alert('⚠️ الرجاء إدخال نص الأمر الحميمي!');
+        return;
+      }
+
+      const newCard = {
+        id: 'custom-' + Date.now(),
+        type: cat,
+        text: text,
+        target: target,
+        isCustom: true
+      };
+
+      allCards.unshift(newCard);
+
+      try {
+        let customs = [];
+        const stored = localStorage.getItem('couples_custom_cards');
+        if (stored) customs = JSON.parse(stored);
+        customs.unshift(newCard);
+        localStorage.setItem('couples_custom_cards', JSON.stringify(customs));
+      } catch(e) {}
+
+      closeCustomCardModal();
+      showToast('تمت إضافة بطاقتكم الخاصة بنجاح 💖');
+      updateCounts();
+      renderCards();
+      zoomCard(newCard.id);
+    }
+
+    // TAB 2: GUIDE FUNCTIONS
+    let guideCategory = 'all';
+    function setGuideCategory(cat) {
+      guideCategory = cat;
+      document.querySelectorAll('.guide-cat-btn').forEach(btn => {
+        if (btn.getAttribute('data-cat') === cat) btn.classList.add('glass-active');
+        else btn.classList.remove('glass-active');
+      });
+      renderGuide();
+    }
+    function renderGuide() {
+      const list = document.getElementById('guideList');
+      const query = (document.getElementById('guideSearchInput').value || '').trim().toLowerCase();
+      list.innerHTML = '';
+
+      const filtered = RAW_GUIDE_IDEAS.filter(idea => {
+        const matchCat = (guideCategory === 'all' || idea.category === guideCategory);
+        const matchQuery = !query || idea.title.toLowerCase().includes(query) || 
+          idea.tagline.toLowerCase().includes(query) || 
+          idea.directCommand.toLowerCase().includes(query);
+        return matchCat && matchQuery;
+      });
+
+      filtered.forEach(idea => {
+        const item = document.createElement('div');
+        item.className = 'glass';
+        item.style.borderRadius = '18px';
+        item.style.padding = '18px';
+
+        item.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px;">
+            <div>
+              <h3 style="font-size: 1.05rem; font-weight: 800; color: #fff; margin: 0 0 4px;">${idea.title}</h3>
+              <div style="font-size: 0.8rem; color: #fda4af; font-weight: 600;">✨ ${idea.tagline}</div>
+            </div>
+            ${getCategoryBadge(idea.category)}
+          </div>
+
+          <!-- Direct Command Box -->
+          <div style="background: linear-gradient(135deg, rgba(225,29,72,0.2), rgba(147,51,234,0.2)); border: 1px solid rgba(244, 114, 182, 0.4); border-radius: 14px; padding: 12px; margin: 12px 0;">
+            <div style="font-size: 0.75rem; color: #fda4af; font-weight: 800; margin-bottom: 4px;">⚡ الأمر المباشر للفراش:</div>
+            <p style="font-size: 0.95rem; font-weight: 800; color: #fff; line-height: 1.5; margin: 0 0 8px;">
+              "${idea.directCommand}"
+            </p>
+            <div style="display: flex; gap: 6px;">
+              <button onclick="copyText('${idea.directCommand.replace(/'/g, "\\\'")}')" class="btn-action" style="padding: 4px 10px; font-size: 0.72rem;">
+                📋 نسخ الأمر
+              </button>
+              <button onclick="launchIdeaAsCard('${idea.id}')" class="btn-action btn-primary" style="padding: 4px 10px; font-size: 0.72rem;">
+                🎴 تشغيل كبطاقة الآن
+              </button>
+            </div>
+          </div>
+
+          <!-- Psychological Impact -->
+          <div style="font-size: 0.82rem; color: #d6d3d1; margin-bottom: 10px; line-height: 1.5;">
+            <strong style="color: #67e8f9;">🧠 الأثر النفسي:</strong> ${idea.psychologicalImpact}
+          </div>
+
+          <!-- Steps -->
+          <div style="margin-bottom: 10px;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #fda4af; margin-bottom: 4px;">📌 خطوات التطبيق:</div>
+            <ul style="padding-right: 20px; font-size: 0.8rem; color: #a8a29e; line-height: 1.6;">
+              ${idea.steps.map(s => '<li>' + s + '</li>').join('')}
+            </ul>
+          </div>
+
+          <!-- Tips -->
+          <div style="font-size: 0.78rem; color: #fcd34d; background: rgba(245, 158, 11, 0.1); border-radius: 10px; padding: 8px 12px;">
+            💡 <strong>نصيحة للزوجين:</strong> ${idea.tipsForCouples}
+          </div>
+        `;
+
+        list.appendChild(item);
+      });
+    }
+
+    function copyText(txt) {
+      navigator.clipboard.writeText(txt).then(() => {
+        showToast('تم نسخ الأمر إلى الحافظة 📋');
+      }).catch(() => {
+        showToast('تم النسخ');
+      });
+    }
+
+    function launchIdeaAsCard(ideaId) {
+      const idea = RAW_GUIDE_IDEAS.find(i => i.id == ideaId);
+      if (!idea) return;
+      activeZoomCard = {
+        id: 'idea-' + idea.id,
+        type: idea.category,
+        text: idea.directCommand,
+        target: 'كلاهما'
+      };
+      zoomCard(activeZoomCard.id);
+      document.getElementById('zoomCategoryBadge').textContent = getCategoryName(idea.category);
+      document.getElementById('zoomTargetBadge').textContent = 'موجه إلى: كلاهما';
+      document.getElementById('zoomCardText').textContent = idea.directCommand;
+      document.getElementById('zoomModal').style.display = 'flex';
+      AudioSystem.playFlip();
+    }
+
+    // TAB 3: WHEEL SYSTEM
+    const WHEEL_SEGMENTS = [
+      { text: 'الزوج 👨', color: '#be123c' },
+      { text: 'الزوجة 👩', color: '#7c3aed' },
+      { text: 'تحدي جريء 🔥', color: '#db2777' },
+      { text: 'مداعبة سريعة 💋', color: '#059669' },
+      { text: 'تدليك بالزيت 💆', color: '#d97706' },
+      { text: 'همس سرّي 🤫', color: '#2563eb' },
+      { text: 'قبلة 3 دقائق ⏳', color: '#c026d3' },
+      { text: 'دور إضافي 👑', color: '#e11d48' }
+    ];
+    let wheelAngle = 0;
+    let isSpinning = false;
+
+    function initWheel() {
+      drawWheel(0);
+    }
+
+    function drawWheel(angle) {
+      const canvas = document.getElementById('wheelCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      const r = cx - 10;
+      const arc = (2 * Math.PI) / WHEEL_SEGMENTS.length;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      WHEEL_SEGMENTS.forEach((seg, i) => {
+        const segAngle = angle + (i * arc);
+        ctx.beginPath();
+        ctx.fillStyle = seg.color;
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, segAngle, segAngle + arc);
+        ctx.lineTo(cx, cy);
+        ctx.fill();
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Text
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(segAngle + arc / 2);
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 13px Tajawal';
+        ctx.shadowColor = 'rgba(0,0,0,0.8)';
+        ctx.shadowBlur = 4;
+        ctx.fillText(seg.text, r - 18, 5);
+        ctx.restore();
+      });
+
+      // Center circle
+      ctx.beginPath();
+      ctx.arc(cx, cy, 26, 0, 2 * Math.PI);
+      ctx.fillStyle = '#0d060f';
+      ctx.fill();
+      ctx.strokeStyle = '#f43f5e';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      ctx.font = '16px serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('❤️', cx, cy);
+    }
+
+    function spinWheel() {
+      if (isSpinning) return;
+      isSpinning = true;
+      document.getElementById('spinBtn').disabled = true;
+      document.getElementById('wheelResultBox').style.display = 'none';
+      AudioSystem.playTick();
+
+      const spinRounds = 4 + Math.random() * 4;
+      const extraAngle = Math.random() * (2 * Math.PI);
+      const totalRotation = (spinRounds * 2 * Math.PI) + extraAngle;
+      const startAngle = wheelAngle;
+      const duration = 4000;
+      const startTime = performance.now();
+
+      let lastTickAngle = startAngle;
+
+      function animate(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        wheelAngle = startAngle + (totalRotation * easeOut);
+
+        // Sound tick check
+        const segArc = (2 * Math.PI) / WHEEL_SEGMENTS.length;
+        if (Math.abs(wheelAngle - lastTickAngle) >= segArc) {
+          AudioSystem.playTick();
+          lastTickAngle = wheelAngle;
+        }
+
+        drawWheel(wheelAngle);
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          isSpinning = false;
+          document.getElementById('spinBtn').disabled = false;
+          determineWheelResult();
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    function determineWheelResult() {
+      const segArc = (2 * Math.PI) / WHEEL_SEGMENTS.length;
+      // Pointer is at 270 degrees (3 * PI / 2)
+      let normalizedAngle = (wheelAngle) % (2 * Math.PI);
+      if (normalizedAngle < 0) normalizedAngle += 2 * Math.PI;
+
+      // Pointer angle is top (-PI/2)
+      let pointerAngle = (3 * Math.PI / 2 - normalizedAngle) % (2 * Math.PI);
+      if (pointerAngle < 0) pointerAngle += 2 * Math.PI;
+
+      const winningIndex = Math.floor(pointerAngle / segArc);
+      const winner = WHEEL_SEGMENTS[winningIndex] || WHEEL_SEGMENTS[0];
+
+      AudioSystem.playFanfare();
+      document.getElementById('wheelResultText').textContent = winner.text;
+      document.getElementById('wheelResultBox').style.display = 'block';
+      showToast('🎉 استقرت العجلة على: ' + winner.text);
+    }
+
+    // TAB 4: DICE SYSTEM
+    function rollDice() {
+      AudioSystem.playDiceRoll();
+      const d1 = document.getElementById('die1');
+      const d2 = document.getElementById('die2');
+      const d3 = document.getElementById('die3');
+
+      d1.classList.add('rolling');
+      d2.classList.add('rolling');
+      d3.classList.add('rolling');
+      document.getElementById('rollDiceBtn').disabled = true;
+
+      setTimeout(() => {
+        const action = DICE_ACTIONS[Math.floor(Math.random() * DICE_ACTIONS.length)];
+        const zone = DICE_ZONES[Math.floor(Math.random() * DICE_ZONES.length)];
+        const duration = DICE_DURATIONS[Math.floor(Math.random() * DICE_DURATIONS.length)];
+
+        document.getElementById('die1Text').textContent = action;
+        document.getElementById('die2Text').textContent = zone;
+        document.getElementById('die3Text').textContent = duration;
+
+        const cmd = `"${action} على ${zone} لمدة ${duration}"`;
+        document.getElementById('diceCommandText').textContent = cmd;
+
+        d1.classList.remove('rolling');
+        d2.classList.remove('rolling');
+        d3.classList.remove('rolling');
+        document.getElementById('rollDiceBtn').disabled = false;
+
+        AudioSystem.playFanfare();
+        showToast('🎲 تم توليد أمر النرد الجديد!');
+      }, 650);
+    }
+
+    function copyCurrentDiceCommand() {
+      const txt = document.getElementById('diceCommandText').textContent.trim();
+      navigator.clipboard.writeText(txt).then(() => {
+        showToast('تم نسخ أمر النرد بنجاح 📋');
+      }).catch(() => {
+        showToast('تم النسخ');
+      });
+    }
+
+    // Switch Tabs
+    function switchTab(tabId) {
+      AudioSystem.playTick();
+      document.getElementById('tabCards').style.display = (tabId === 'cards') ? 'block' : 'none';
+      document.getElementById('tabGuide').style.display = (tabId === 'guide') ? 'block' : 'none';
+      document.getElementById('tabWheel').style.display = (tabId === 'wheel') ? 'block' : 'none';
+      document.getElementById('tabDice').style.display = (tabId === 'dice') ? 'block' : 'none';
+
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        if (btn.getAttribute('data-tab') === tabId) btn.classList.add('glass-active');
+        else btn.classList.remove('glass-active');
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (tabId === 'wheel') {
+        setTimeout(initWheel, 50);
+      }
+    }
+
+    // Kickoff on DOM Load
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
